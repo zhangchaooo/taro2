@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro'
 import { baseUrl } from '../config'
 
 export default (options = { method: 'GET', data: {} }) => {
-  // Taro.setStorageSync('access_token', "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZGlhbmxpYW5nYmgudGpiMmMuY24vYXBpL3RleHRsb2dpbiIsImlhdCI6MTU1ODU5NDQwNSwiZXhwIjoxNTYxNTk0NDA1LCJuYmYiOjE1NTg1OTQ0MDUsImp0aSI6Inp5bnhZOXVGTHVaeUZyZ20iLCJzdWIiOjMsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.SsuGq3SIOVUs1P8HP5yfVXKjvEnaxGERWQTnxSJrrRU")
+  Taro.setStorageSync('access_token', "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMC4wLjAuNlwvZXhwcmVzc1wvbWluaVwvdGVzdC1sb2dpbiIsImlhdCI6MTU3MTA0MjcwOCwiZXhwIjoxNTc0MDQyNzA4LCJuYmYiOjE1NzEwNDI3MDgsImp0aSI6ImZJUEllOHFHSER3TWFkUnYiLCJzdWIiOjEsInBydiI6IjY1NjdkNTQ2YjU5M2RlNzRjMGIyZDU0YzdhMGMyOGEwMzY0M2Q0N2QiLCJndWFyZCI6InVzZXIifQ.DpeR84LL1pR9zMChSDObs9r0RQN5AxJztYQEkcjSwdg")
   const access_token = Taro.getStorageSync('access_token')
   return Taro.request({
     url: baseUrl + options.url,

@@ -20,16 +20,6 @@ export default class Index extends Component {
     this.setState({ showLogin: false })
   }
 
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
-
   config = {
     navigationBarTitleText: '授权登录页',
     usingComponents: {
