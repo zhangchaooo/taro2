@@ -1,0 +1,5 @@
+@import '../../styles/common.scss';
+@import '../../styles/comp.scss';
+.btn-active:active {
+  background: rgba(255, 255, 255, 0.3);
+}

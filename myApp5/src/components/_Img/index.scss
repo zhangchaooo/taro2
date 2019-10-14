@@ -1,0 +1,10 @@
+@import "../../styles/common.scss";
+
+.avatar {
+  background: #fff;
+  border-radius: 50%;
+  overflow: hidden;
+  .Image {
+    border-radius: 50%;
+  }
+}

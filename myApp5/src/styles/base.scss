@@ -1,0 +1,26 @@
+@import "./mixin";
+@import "~taro-ui/dist/style/index.scss";
+
+page, body {
+  font-family:PingFang SC;
+  font-size:28px;
+  height: 100%;
+  color:#333333;
+  box-sizing: border-box;
+  background-color: #f1f1f1;
+  position: relative;
+}
+
+.Radio {
+  transform: scale(0.7)
+}
+
+// 隐藏安卓滚动条
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+
+

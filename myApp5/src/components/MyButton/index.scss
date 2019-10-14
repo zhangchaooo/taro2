@@ -1,0 +1,17 @@
+@import '../../styles/common.scss';
+.myButton {
+  color: #fff;
+  .btn {
+    color: #fff;
+    font-size:34px;
+    font-weight: 500;
+    border:1px solid #fff;
+    background: rgba(255,255,255,0.3);
+    box-shadow:0px 20px 30px rgba(255,255,255,0.17);
+  }
+  // .btn:active {
+  //   // background:rgba(237,65,74,1);
+  //   // background:rgb(194, 45, 53);
+  // }
+
+}

@@ -1,0 +1,23 @@
+.index {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .at-icon-check-circle {
+    margin-top: 50px;
+    font-size: 330px;
+    color: #15ff64;
+  }
+  .info{
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  .btn-max-w {
+    margin-top: 50px;
+    width: 650px;
+  }
+  .white-color{
+    background: #fff;
+    color: #FFAB0A;
+  }
+}

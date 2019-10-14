@@ -1,0 +1,12 @@
+@import '../../styles/common.scss';
+.ModalLogin {
+  .pop {
+    z-index: 10000;
+  }
+  .Button::after {
+    border: none;
+  }
+  // .Button::after:active {
+  //   background: rgb(0, 0, 0)
+  // }
+}
