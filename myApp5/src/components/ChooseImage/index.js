@@ -40,7 +40,7 @@ class ChooseImage extends Component {
         () => {
           const { files } = this.state
           //this.setFatherUploadSrc()// 设置删除数据图片地址
-          if (files.length === 3) {
+          if (files.length === 1) {
             // 最多三张图片 隐藏添加图片按钮
             this.setState({
               showUploadBtn: false
@@ -70,7 +70,7 @@ class ChooseImage extends Component {
         },
         () => {
           const { files } = this.state
-          if (files.length === 3) {
+          if (files.length === 1) {
             // 最多三张图片 隐藏添加图片按钮
             this.setState({
               showUploadBtn: false
@@ -92,6 +92,8 @@ class ChooseImage extends Component {
   onImageClick(index, file) {
     let imgs = []
     this.state.files.map((item, index) => {
+      console.log('点击图片')
+
       imgs.push(item.file.path)
     })
     if (imgs[index].indexOf('.pdf') > -1 || imgs[index].indexOf('.PDF') > -1) {
@@ -205,7 +207,7 @@ class ChooseImage extends Component {
       <View>
         <AtImagePicker
           multiple={false}
-          length={3} //单行的图片数量
+          length={1} //单行的图片数量
           files={this.state.files}
           onChange={this.onChange.bind(this)}
           onFail={this.onFail.bind(this)}
@@ -217,7 +219,7 @@ class ChooseImage extends Component {
           className='poof_submit_btn'
           onClick={this.toUpload}
         >
-          上传图片
+          上传头像
         </AtButton>
       </View>
     )

@@ -8,7 +8,7 @@ export default {
   effects: {
     *login({ payload, callback }, { call, put }) {
       const res = yield call(login, payload)
-      console.log(res)
+      console.log(res.code)
 
       if (res.code === 0) {
         Taro.setStorageSync('access_token', res.data.access_token)

@@ -1,38 +1,35 @@
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
 import { View, Text, Picker } from '@tarojs/components'
-import { AtButton, AtAvatar, AtForm, AtInput } from 'taro-ui'
+import { AtButton, AtAvatar, AtForm, AtInput, AtImagePicker } from 'taro-ui'
 
 import ChooseImage from '../../components/ChooseImage'
 
 import './index.scss'
 
-@connect(({ home }) => ({
-  ...home
+@connect(({ register }) => ({
+  ...register
 }))
 export default class Index extends Component {
   // eslint-disable-next-line react/sort-comp
 
   // eslint-disable-next-line react/sort-comp
   config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '注册页'
+  }
+  constructor() {
+    super(...arguments)
   }
   state = {
     selector: ['男', '女'],
     selectorChecked: '女',
     value: '',
-    head_image: '',
-    name: '',
-    sex: '',
-    mobile: '',
-    id_card: '',
-    unit: '',
     chooseImg: {
       files: [],
-      showUploadBtn:true,
-      upLoadImg:[]
+      showUploadBtn: true,
+      upLoadImg: []
     },
-    files:[]
+    files: []
   }
 
   handleChange() {}
@@ -94,21 +91,35 @@ export default class Index extends Component {
     // console.log(1)
   }
 
-  // 拿到子组件上传图片的路径数组
-  getOnFilesValue = (value) => {
-    console.log(value);
-    this.setState({
-      files: value
-    },() => {
-      console.log(this.state.files)
-    })
+  getOnFilesValue = value => {
+    console.log(value)
+    this.setState(
+      {
+        files: value
+      },
+      () => {
+        console.log(this.state.files)
+      }
+    )
   }
 
   render() {
     return (
       <View className='index'>
-         <ChooseImage chooseImg = {this.state.chooseImg} onFilesValue={this.getOnFilesValue.bind(this)}/>
-        <AtAvatar circle image='https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike180%2C5%2C5%2C180%2C60/sign=05b9edbbaed3fd1f2204aa6851274e7a/1ad5ad6eddc451da06f9727eb0fd5266d0163213.jpg' className='image'></AtAvatar>
+        {/* <AtAvatar
+          circle
+          image={this.props.head_image}
+          className='image'
+        ></AtAvatar> */}
+        <ChooseImage
+          chooseImg={this.state.chooseImg}
+          onFilesValue={this.getOnFilesValue.bind(this)}
+        />
+        <AtImagePicker
+          showAddBtn={this.state.isShowAddBtn}
+          files={this.state.files}
+          onChange={this.onChange.bind(this)}
+        />
         <View className='formWrap'>
           <AtForm className='form'>
             <View>
