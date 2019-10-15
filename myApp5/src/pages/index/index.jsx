@@ -3,6 +3,8 @@ import { connect } from '@tarojs/redux'
 import { View, Text, Picker } from '@tarojs/components'
 import { AtButton, AtAvatar, AtForm, AtInput } from 'taro-ui'
 
+import ChooseImage from '../../components/ChooseImage'
+
 import './index.scss'
 
 @connect(({ home }) => ({
@@ -19,12 +21,18 @@ export default class Index extends Component {
     selector: ['男', '女'],
     selectorChecked: '女',
     value: '',
-    head_image: this.state.head_image
-    /* name: '',
+    head_image: '',
+    name: '',
     sex: '',
     mobile: '',
     id_card: '',
-    unit: '' */
+    unit: '',
+    chooseImg: {
+      files: [],
+      showUploadBtn:true,
+      upLoadImg:[]
+    },
+    files:[]
   }
 
   handleChange() {}
@@ -83,13 +91,24 @@ export default class Index extends Component {
         unit: this.props.unit
       }
     })
-    console.log(1)
+    // console.log(1)
+  }
+
+  // 拿到子组件上传图片的路径数组
+  getOnFilesValue = (value) => {
+    console.log(value);
+    this.setState({
+      files: value
+    },() => {
+      console.log(this.state.files)
+    })
   }
 
   render() {
     return (
       <View className='index'>
-        <AtAvatar circle className='image'></AtAvatar>
+         <ChooseImage chooseImg = {this.state.chooseImg} onFilesValue={this.getOnFilesValue.bind(this)}/>
+        <AtAvatar circle image='https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike180%2C5%2C5%2C180%2C60/sign=05b9edbbaed3fd1f2204aa6851274e7a/1ad5ad6eddc451da06f9727eb0fd5266d0163213.jpg' className='image'></AtAvatar>
         <View className='formWrap'>
           <AtForm className='form'>
             <View>
