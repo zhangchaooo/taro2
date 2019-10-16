@@ -182,7 +182,7 @@ export default class Index extends Component {
               className='btn-max-w'
               type='primary'
             >
-              按钮
+              注册登录
             </AtButton>
             {/* <AtButton onClick={this.toHome} className='btna' type='primary'>ToHome</AtButton> */}
           </AtForm>

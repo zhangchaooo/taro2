@@ -56,6 +56,8 @@ export default class Home extends Component {
     })
   }
   getrecipients_name = event => {
+    console.log(1)
+
     this.props.dispatch({
       type: 'deposit/save',
       payload: { recipients_name: event }

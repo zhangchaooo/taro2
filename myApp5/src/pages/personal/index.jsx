@@ -1,45 +1,65 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image, Form, Input, Button } from '@tarojs/components'
-import { AtButton, AtAvatar, AtForm, AtInput, AtDivider } from 'taro-ui'
+import { View, Text } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
+import { AtButton, AtForm, AtInput, AtAvatar } from 'taro-ui'
 import './index.scss'
 
+@connect(({ personal }) => ({
+  ...personal
+}))
 export default class Home extends Component {
+  // eslint-disable-next-line react/sort-comp
   config = {
     navigationBarTitleText: 'Home'
   }
   state = {
-    selector: ['家电', '家居', '建材', '其他'],
-    selectorChecked: '快递',
-    timeSel: '12:01',
-    dateSel: '2018-04-22',
-    value: ''
+    name: 'lison',
+    sex: '男',
+    mobile: '13269875489',
+    id_card: '132325198709210689',
+    unit: '顺丰'
   }
-  handleChange(value) {
-    this.setState({
-      value
+  handleChangeAvatar = e => {
+    console.log(e)
+  }
+  handleChangeName = e => {
+    console.log(e)
+    this.props.dispatch({
+      type: 'personal/save',
+      payload: { name: e }
     })
-    // 在小程序中，如果想改变 value 的值，需要 `return value` 从而改变输入框的当前值
-    return value
+    /* console.log('state.name is =>' + this.state.name) */
   }
-  onChange = e => {
-    this.setState({
-      selectorChecked: this.state.selector[e.detail.value]
+  handleChangeNumber = e => {
+    this.props.dispatch({
+      type: 'personal/save',
+      payload: { mobile: e }
     })
   }
-  onTimeChange = e => {
-    this.setState({
-      timeSel: e.detail.value
+  handleChangeIdCard = e => {
+    this.props.dispatch({
+      type: 'personal/save',
+      payload: { id_card: e }
     })
   }
-  onDateChange = e => {
-    this.setState({
-      dateSel: e.detail.value
+  handleChangeUnit = e => {
+    this.props.dispatch({
+      type: 'personal/save',
+      payload: { unit: e }
+    })
+  }
+  getPersonalInfo = () => {
+    this.props.dispatch({
+      type: 'personal/getInfo'
     })
   }
 
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.getPersonalInfo()
+    console.log()
+  }
 
   componentWillUnmount() {}
 
@@ -50,7 +70,11 @@ export default class Home extends Component {
   render() {
     return (
       <View className='index'>
-        {/* <AtAvatar circle  className='image'></AtAvatar> */}
+        <AtAvatar
+          circle
+          image={this.props.head_image}
+          className='image'
+        ></AtAvatar>
         <Text className='text-pesonal'>个人资料</Text>
         <View className='formWrap'>
           <AtForm
@@ -58,23 +82,23 @@ export default class Home extends Component {
             onSubmit={this.formSubmit}
             onReset={this.formReset}
           >
-            <AtInput
-                name='value'
-                title='头像 '
-                type='text'
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-                placeholder='icon'
-                className='input'
-              />
+            {/*  <AtInput
+              name='value'
+              title='头像 '
+              type='text'
+              value={this.state.value}
+              onChange={this.handleChangeAvatar.bind(this)}
+              placeholder='icon'
+              className='input'
+            /> */}
             <View>
               <AtInput
                 name='value'
                 title='姓名 '
-                type='text'
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-                placeholder='橘右京'
+                type='name'
+                value={this.props.name}
+                onChange={this.handleChangeName.bind(this)}
+                placeholder=''
                 className='input'
               />
             </View>
@@ -82,20 +106,28 @@ export default class Home extends Component {
               className='input'
               type='number'
               title='手机号'
-              placeholder='13684896324'
+              value={this.props.mobile}
+              onChange={this.handleChangeNumber.bind(this)}
+              placeholder=''
             />
             <AtInput
               className='input'
               title='证件号'
-              placeholder='132325198836522301'
+              value={this.props.id_card}
+              onChange={this.handleChangeIdCard.bind(this)}
+              placeholder=''
             />
             <AtInput
               className='input'
               type='digit'
               title='所属单位'
-              placeholder='顺丰快递'
+              value={this.props.unit}
+              onChange={this.handleChangeUnit.bind(this)}
+              placeholder=''
             />
-            <AtButton className='btn-max-w' type='primary'>按钮</AtButton>
+            <AtButton className='btn-max-w' type='primary'>
+              保存
+            </AtButton>
             {/* <AtButton onClick={this.toHome} className='btna' type='primary'>ToHome</AtButton> */}
           </AtForm>
         </View>
@@ -109,4 +141,3 @@ export default class Home extends Component {
     })
   }
 }
-

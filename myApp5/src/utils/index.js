@@ -1,45 +1,43 @@
 import Taro from '@tarojs/taro'
 
-export function showToast(msg) {
+export function showToast (msg) {
   Taro.showToast({
     title: msg,
     icon: 'none'
   })
 }
 
-export function authReLaunch({ path, failCb }) {
-  /* console.log(2) */
 
-  const token = Taro.getStorageSync('access_token')
-  /* console.log(3) */
-  if (!token) return failCb && failCb()
+export function authReLaunch ({path,failCb}) {
+  const token = Taro.getStorageSync('access_token');
+  if (!token) return failCb && failCb();
   Taro.reLaunch({ url: path })
-  /*  console.log(5) */
+ }
+
+
+export function authNav ({path,failCb}) {
+ const token = Taro.getStorageSync('access_token');
+ if (!token) return failCb && failCb();
+ Taro.navigateTo({ url: path })
 }
 
-/* failCb && failCb() */
 
-export function authNav({ path, failCb }) {
-  const token = Taro.getStorageSync('access_token')
-  if (!token) return failCb && failCb()
-  Taro.navigateTo({ url: path })
-}
-
-export function uploadAndDonateStep(_this) {
-  const { dispatch } = _this.props
+export function uploadAndDonateStep (_this) {
+  const { dispatch } = _this.props;
   Taro.getSetting({
-    success: function(__res) {
+    success: function (__res) {
       const scope_werun = __res.authSetting['scope.werun']
       if (scope_werun === false) {
         // console.log('werun false');
         return Taro.showModal({
           title: '提示',
           content: '您未开通微信运动，请开通微信运动后重试',
-          success: function(___res) {
+          success: function (___res) {
             if (___res.confirm) {
               //跳转去设置
               wx.openSetting({
-                success: function() {}
+                success: function () {
+                }
               })
             } else {
               //不设置
@@ -52,38 +50,35 @@ export function uploadAndDonateStep(_this) {
           scope: 'scope.werun',
           success: () => {
             Taro.getWeRunData({
-              success: function(___res) {
+              success: function (___res) {
                 // console.log("appid:" + appid + "session_key:" + session_key + "encryptedData:" + res.encryptedData + "iv:" + res.iv);
-                const { encryptedData, iv } = ___res
+                const { encryptedData, iv } = ___res;
                 dispatch({
                   type: 'home/userUpload_step',
                   payload: {
                     encryptedData,
-                    iv
+                    iv,
                   },
-                  callback: ____res => {
+                  callback: (____res) => {
                     if (____res.code == 0 || ____res.code == 200) {
+
                       dispatch({
                         type: 'home/userCan_step',
-                        callback: res => {
-                          if (res.code == 0) {
+                        callback: (res) => {
+                          if(res.code ==0 ) {
                             const { step_num } = res.data
                             if (step_num == 0) {
                               return showToast('今日已捐步')
                             }
                             Taro.showModal({
                               title: '提示',
-                              content:
-                                '您有' + step_num + '步，' + '确定捐步吗？',
-                              success: res => {
+                              content: '您有'+step_num+'步，'+'确定捐步吗？',
+                              success: (res) => {
                                 if (res.confirm) {
                                   dispatch({
                                     type: 'home/userStepDonate',
-                                    payload: {
-                                      step_number: step_num,
-                                      id: _this.id
-                                    },
-                                    callback: res => {
+                                    payload: { step_number: step_num, id: _this.id },
+                                    callback: (res) => {
                                       if (res.code == 0) {
                                         showToast('捐步成功')
                                         _this.initData(_this.id)
@@ -101,12 +96,12 @@ export function uploadAndDonateStep(_this) {
                         }
                       })
                     } else {
-                      _this.setState({ showLogin: true })
+                      _this.setState({showLogin: true});
                     }
                   }
                 })
               },
-              fail: function() {
+              fail: function () {
                 // return Taro.showModal({
                 //   title: '提示',
                 //   content: '您未开通微信运动，请关注“微信运动”公众号，开通微信运动后重试',
@@ -117,6 +112,7 @@ export function uploadAndDonateStep(_this) {
             })
           }
         })
+
       }
     }
   })

@@ -1,11 +1,19 @@
+/* eslint-disable react/no-unused-state */
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
 import { View, Text } from '@tarojs/components'
 import { AtAvatar, AtTabs, AtTabsPane } from 'taro-ui'
 import './index.scss'
 
-/* import "~taro-ui/dist/style/components/avatar.scss" */
+import withLoad from '../../utils/withLoad'
+import Loading from '../../components/_Loading'
 
+/* import "~taro-ui/dist/style/components/avatar.scss" */
+@withLoad({
+  type: 'userInfo/getPersonalInfo',
+  listProp: 'res',
+  limit: 1
+})
 @connect(({ userInfo }) => ({
   ...userInfo
 }))
@@ -16,7 +24,9 @@ export default class UserInfo extends Component {
   }
   state = {
     selector: ['男', '女'],
-    current: 0
+    current: 0,
+    projectState: ['未取件', '已取件', '已逾期']
+    // eslint-disable-next-line taro/duplicate-name-of-state-and-props
   }
   handleChange(value) {
     this.setState({
@@ -54,7 +64,6 @@ export default class UserInfo extends Component {
     this.props.dispatch({
       type: 'userInfo/getPersonalInfo'
     })
-    /* console.log('go') */
   }
 
   componentWillMount() {}
@@ -72,15 +81,15 @@ export default class UserInfo extends Component {
   render() {
     const tabList = [
       { title: '全部' },
-      { title: '代取件' },
+      { title: '待取件' },
       { title: '已取件' },
       { title: '已逾期' }
     ]
+    const awaitExpress = this.props.res.filter(item => item.state === 1)
+    const geted = this.props.res.filter(item => item.state === 2)
+    const overTime = this.props.res.filter(item => item.state === 3)
     return (
       <View className='index'>
-        {/* <Text className='text' onClick={this.toHome}>
-          Hello world!
-        </Text> */}
         <View className='top'>
           <AtAvatar circle className='image'></AtAvatar>
           <View className='info-wrap'>
@@ -113,208 +122,144 @@ export default class UserInfo extends Component {
           >
             <AtTabsPane current={this.state.current} index={0}>
               <View style='background-color: #FAFBFC;text-align: center;'>
-                <View className='anyone-info-wrap'>
-                  <View className='tel-number-series item item1'>
-                    <View className='username-telephone-wrap'>
-                      <View className='username align'>娜可露露: </View>
-                      <View className='telephone align tel'>13636925632</View>
+                {/* for (let index = 0; index < res.length; index++) {
+                  const element = array[index];
+
+                } */}
+                {this.props.res.map(item => {
+                  return (
+                    <View className='anyone-info-wrap' key={item.id}>
+                      <View className='tel-number-series item item1'>
+                        <View className='username-telephone-wrap'>
+                          <View className='username align'>
+                            {item.recipients_name}:
+                          </View>
+                          <View className='telephone align tel'>
+                            {item.recipients_mobile}
+                          </View>
+                        </View>
+                        <View className='durtime-wrap'>
+                          <View className='username align'>寄存时间：</View>
+                          <View className='telephone align'>
+                            {item.created_at}
+                          </View>
+                        </View>
+                        <View className='series-wrap'>
+                          <View className='username align'>寄存物品：</View>
+                          <View className='telephone align'>{item.name}</View>
+                        </View>
+                      </View>
+                      <View className='status-wrap item item2'>
+                        <View className='status align'>
+                          {this.state.projectState[item.state - 1]}
+                        </View>
+                      </View>
                     </View>
-                    <View className='durtime-wrap'>
-                      <View className='username align'>寄存时间：</View>
-                      <View className='telephone align'>2019-10-1 14:41</View>
-                    </View>
-                    <View className='series-wrap'>
-                      <View className='username align'>寄存物品：</View>
-                      <View className='telephone align'>快递</View>
-                    </View>
-                  </View>
-                  <View className='status-wrap item item2'>
-                    <View className='status align'>待领取</View>
-                  </View>
-                </View>
-                <View className='anyone-info-wrap'>
-                  <View className='tel-number-series item item1'>
-                    <View className='username-telephone-wrap'>
-                      <View className='username align'>娜可露露: </View>
-                      <View className='telephone align tel'>13636925632</View>
-                    </View>
-                    <View className='durtime-wrap'>
-                      <View className='username align'>寄存时间：</View>
-                      <View className='telephone align'>2019-10-1 14:41</View>
-                    </View>
-                    <View className='series-wrap'>
-                      <View className='username align'>寄存物品：</View>
-                      <View className='telephone align'>快递</View>
-                    </View>
-                  </View>
-                  <View className='status-wrap item item2'>
-                    <View className='status align'>待领取</View>
-                  </View>
-                </View>
-                <View className='anyone-info-wrap'>
-                  <View className='tel-number-series item item1'>
-                    <View className='username-telephone-wrap'>
-                      <View className='username align'>娜可露露: </View>
-                      <View className='telephone align tel'>13636925632</View>
-                    </View>
-                    <View className='durtime-wrap'>
-                      <View className='username align'>寄存时间：</View>
-                      <View className='telephone align'>2019-10-1 14:41</View>
-                    </View>
-                    <View className='series-wrap'>
-                      <View className='username align'>寄存物品：</View>
-                      <View className='telephone align'>快递</View>
-                    </View>
-                  </View>
-                  <View className='status-wrap item item2'>
-                    <View className='status align'>待领取</View>
-                  </View>
-                </View>
-                <View className='anyone-info-wrap'>
-                  <View className='tel-number-series item item1'>
-                    <View className='username-telephone-wrap'>
-                      <View className='username align'>娜可露露: </View>
-                      <View className='telephone align tel'>13636925632</View>
-                    </View>
-                    <View className='durtime-wrap'>
-                      <View className='username align'>寄存时间：</View>
-                      <View className='telephone align'>2019-10-1 14:41</View>
-                    </View>
-                    <View className='series-wrap'>
-                      <View className='username align'>寄存物品：</View>
-                      <View className='telephone align'>快递</View>
-                    </View>
-                  </View>
-                  <View className='status-wrap item item2'>
-                    <View className='status align'>待领取</View>
-                  </View>
-                </View>
+                  )
+                })}
               </View>
             </AtTabsPane>
             <AtTabsPane current={this.state.current} index={1}>
               <View style='background-color: #FAFBFC;text-align: center;'>
-                <View className='anyone-info-wrap'>
-                  <View className='tel-number-series item item1'>
-                    <View className='username-telephone-wrap'>
-                      <View className='username align'>娜可露露: </View>
-                      <View className='telephone align tel'>13636925632</View>
+                {awaitExpress.map(item => {
+                  return (
+                    <View className='anyone-info-wrap' key='item.id'>
+                      <View className='tel-number-series item item1'>
+                        <View className='username-telephone-wrap'>
+                          <View className='username align'>
+                            {item.recipients_name}:
+                          </View>
+                          <View className='telephone align tel'>
+                            {item.recipients_mobile}
+                          </View>
+                        </View>
+                        <View className='durtime-wrap'>
+                          <View className='username align'>寄存时间：</View>
+                          <View className='telephone align'>
+                            {item.created_at}
+                          </View>
+                        </View>
+                        <View className='series-wrap'>
+                          <View className='username align'>寄存物品：</View>
+                          <View className='telephone align'>{item.name}</View>
+                        </View>
+                      </View>
+                      <View className='status-wrap item item2'>
+                        <View className='status align'>
+                          {this.state.projectState[item.state - 1]}
+                        </View>
+                      </View>
                     </View>
-                    <View className='durtime-wrap'>
-                      <View className='username align'>寄存时间：</View>
-                      <View className='telephone align'>2019-10-1 14:41</View>
-                    </View>
-                    <View className='series-wrap'>
-                      <View className='username align'>寄存物品：</View>
-                      <View className='telephone align'>快递</View>
-                    </View>
-                  </View>
-                  <View className='status-wrap item item2'>
-                    <View className='status align'>待领取</View>
-                  </View>
-                </View>
-                <View className='anyone-info-wrap'>
-                  <View className='tel-number-series item item1'>
-                    <View className='username-telephone-wrap'>
-                      <View className='username align '>娜可露露: </View>
-                      <View className='telephone tel'>13636925632</View>
-                    </View>
-                    <View className='durtime-wrap'>
-                      <View className='username align'>寄存时间：</View>
-                      <View className='telephone'>2019-10-1 14:41</View>
-                    </View>
-                    <View className='series-wrap'>
-                      <View className='username align'>寄存物品：</View>
-                      <View className='telephone align'>快递</View>
-                    </View>
-                  </View>
-                  <View className='status-wrap item item2'>
-                    <View className='status align'>待领取</View>
-                  </View>
-                </View>
+                  )
+                })}
               </View>
             </AtTabsPane>
             <AtTabsPane current={this.state.current} index={2}>
-              <View style='background-color: #FAFBFC;text-align: center;'>
-                <View className='anyone-info-wrap'>
-                  <View className='tel-number-series item item1'>
-                    <View className='username-telephone-wrap'>
-                      <View className='username align'>娜可露露: </View>
-                      <View className='telephone align tel'>13636925632</View>
+              {geted.map(item => {
+                return (
+                  <View className='anyone-info-wrap' key='item.id'>
+                    <View className='tel-number-series item item1'>
+                      <View className='username-telephone-wrap'>
+                        <View className='username align'>
+                          {item.recipients_name}:
+                        </View>
+                        <View className='telephone align tel'>
+                          {item.recipients_mobile}
+                        </View>
+                      </View>
+                      <View className='durtime-wrap'>
+                        <View className='username align'>寄存时间：</View>
+                        <View className='telephone align'>
+                          {item.created_at}
+                        </View>
+                      </View>
+                      <View className='series-wrap'>
+                        <View className='username align'>寄存物品：</View>
+                        <View className='telephone align'>{item.name}</View>
+                      </View>
                     </View>
-                    <View className='durtime-wrap'>
-                      <View className='username align'>寄存时间：</View>
-                      <View className='telephone align'>2019-10-1 14:41</View>
-                    </View>
-                    <View className='series-wrap'>
-                      <View className='username align'>寄存物品：</View>
-                      <View className='telephone align'>快递</View>
-                    </View>
-                  </View>
-                  <View className='status-wrap item item2'>
-                    <View className='status align'>待领取</View>
-                  </View>
-                </View>
-                <View className='anyone-info-wrap'>
-                  <View className='tel-number-series item item1'>
-                    <View className='username-telephone-wrap'>
-                      <View className='username align '>娜可露露: </View>
-                      <View className='telephone tel'>13636925632</View>
-                    </View>
-                    <View className='durtime-wrap'>
-                      <View className='username align'>寄存时间：</View>
-                      <View className='telephone'>2019-10-1 14:41</View>
-                    </View>
-                    <View className='series-wrap'>
-                      <View className='username align'>寄存物品：</View>
-                      <View className='telephone align'>快递</View>
+                    <View className='status-wrap item item2'>
+                      <View className='status align'>
+                        {this.state.projectState[item.state - 1]}
+                      </View>
                     </View>
                   </View>
-                  <View className='status-wrap item item2'>
-                    <View className='status align'>待领取</View>
-                  </View>
-                </View>
-              </View>
+                )
+              })}
             </AtTabsPane>
             <AtTabsPane current={this.state.current} index={3}>
               <View style='background-color: #FAFBFC;text-align: center;'>
-                <View className='anyone-info-wrap'>
-                  <View className='tel-number-series item item1'>
-                    <View className='username-telephone-wrap'>
-                      <View className='username align'>娜可露露: </View>
-                      <View className='telephone align tel'>13636925632</View>
+                {overTime.map(item => {
+                  return (
+                    <View className='anyone-info-wrap' key='item.id'>
+                      <View className='tel-number-series item item1'>
+                        <View className='username-telephone-wrap'>
+                          <View className='username align'>
+                            {item.recipients_name}:
+                          </View>
+                          <View className='telephone align tel'>
+                            {item.recipients_mobile}
+                          </View>
+                        </View>
+                        <View className='durtime-wrap'>
+                          <View className='username align'>寄存时间：</View>
+                          <View className='telephone align'>
+                            {item.created_at}
+                          </View>
+                        </View>
+                        <View className='series-wrap'>
+                          <View className='username align'>寄存物品：</View>
+                          <View className='telephone align'>{item.name}</View>
+                        </View>
+                      </View>
+                      <View className='status-wrap item item2'>
+                        <View className='status align'>
+                          {this.state.projectState[item.state - 1]}
+                        </View>
+                      </View>
                     </View>
-                    <View className='durtime-wrap'>
-                      <View className='username align'>寄存时间：</View>
-                      <View className='telephone align'>2019-10-1 14:41</View>
-                    </View>
-                    <View className='series-wrap'>
-                      <View className='username align'>寄存物品：</View>
-                      <View className='telephone align'>快递</View>
-                    </View>
-                  </View>
-                  <View className='status-wrap item item2'>
-                    <View className='status align'>待领取</View>
-                  </View>
-                </View>
-                <View className='anyone-info-wrap'>
-                  <View className='tel-number-series item item1'>
-                    <View className='username-telephone-wrap'>
-                      <View className='username align '>娜可露露: </View>
-                      <View className='telephone tel'>13636925632</View>
-                    </View>
-                    <View className='durtime-wrap'>
-                      <View className='username align'>寄存时间：</View>
-                      <View className='telephone'>2019-10-1 14:41</View>
-                    </View>
-                    <View className='series-wrap'>
-                      <View className='username align'>寄存物品：</View>
-                      <View className='telephone align'>快递</View>
-                    </View>
-                  </View>
-                  <View className='status-wrap item item2'>
-                    <View className='status align'>待领取</View>
-                  </View>
-                </View>
+                  )
+                })}
               </View>
             </AtTabsPane>
           </AtTabs>

@@ -1,23 +1,15 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
 import './index.scss'
 /* import "~taro-ui/dist/style/components/avatar.scss" */
 
 export default class Success extends Component {
+  // eslint-disable-next-line react/sort-comp
   config = {
     navigationBarTitleText: 'Success页面'
   }
-  state = {
-    selector: ['男', '女']
-  }
-  handleChange(value) {
-    this.setState({
-      value
-    })
-    // 在小程序中，如果想改变 value 的值，需要 `return value` 从而改变输入框的当前值
-    return value
-  }
+  state = {}
 
   componentWillMount() {}
 
@@ -39,10 +31,18 @@ export default class Success extends Component {
         <View className='info'>
           <Text>寄存成功</Text>
         </View>
-        <AtButton className='btn-max-w' type='primary'>
+        <AtButton
+          onClick={this.toHome.bind(this)}
+          className='btn-max-w'
+          type='primary'
+        >
           继续存件
         </AtButton>
-        <AtButton className='btn-max-w white-color' type='primary'>
+        <AtButton
+          onClick={this.toUserInfo.bind(this)}
+          className='btn-max-w white-color'
+          type='primary'
+        >
           寄存查询
         </AtButton>
       </View>
@@ -52,6 +52,12 @@ export default class Success extends Component {
   toHome() {
     Taro.navigateTo({
       url: '/pages/home/index'
+    })
+  }
+
+  toUserInfo() {
+    Taro.navigateTo({
+      url: '/pages/userInfo/index'
     })
   }
 }
