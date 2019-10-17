@@ -21,9 +21,10 @@ export default class ModalLogin extends Component {
     Taro.login({
       success: res => {
         const { encryptedData, iv, userInfo } = e.detail
-        console.log(encryptedData, iv, res.code)
+        /* console.log(encryptedData, iv, res.code)
         console.log(iv)
-        console.log(res.code)
+        console.log(res.code) */
+        console.log(userInfo)
 
         dispatch({
           type: 'member/login',

@@ -2,70 +2,68 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  .top{
+  .top {
     display: flex;
     flex-direction: row;
     width: 100%;
     margin-left: 150px;
     margin-top: 60px;
-    .info-wrap{
+    .info-wrap {
       /* background: red; */
       width: 100%;
       height: 100%;
       margin-left: 60px;
       display: flex;
       justify-content: space-around;
-      .item{
+      .item {
         flex: 1;
       }
-      .item1{
+      .item1 {
         flex: 0 0 70%;
         /* background: pink; */
       }
-      .item2{
+      .item2 {
         flex: 0 0 30%;
         /* background: yellow; */
       }
-      .top-info{
+      .top-info {
         display: flex;
         flex-direction: column;
-        .item{
+        .item {
           flex: 1;
         }
-        .item1{
+        .item1 {
           flex: 0 0 55%;
           /* background: pink; */
-          .at-icon-heart{
+          .at-icon-heart {
             margin-left: 8px;
           }
         }
-        .item2{
+        .item2 {
           flex: 0 0 45%;
-        /*   background: yellow; */
+          /*   background: yellow; */
         }
         .top-info-name {
           display: flex;
           flex-direction: row;
         }
-        
-        
       }
-      .top-icon{
-          .at-icon-chevron-right{
-            font-size: 48px;
-            margin-top: 20px;
+      .top-icon {
+        .at-icon-chevron-right {
+          font-size: 48px;
+          margin-top: 20px;
         }
-        }
+      }
     }
   }
-  .TabsWrap{
+  .TabsWrap {
     margin-top: 30px;
     padding-top: 30px;
     width: 96vw;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    .anyone-info-wrap{
+    .anyone-info-wrap {
       margin-bottom: 30px;
       margin-top: 30px;
       padding: 30px 10px;
@@ -73,34 +71,37 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      .item{
+      .item {
         flex: 1;
       }
-      .item1{
+      .item1 {
         flex: 0 0 75%;
         /* background: pink; */
       }
-      .item2{
+      .item2 {
         flex: 0 0 20%;
         /* background: yellow; */
       }
-      .align{
+      .align {
         text-align: left;
       }
-      .username-telephone-wrap, .durtime-wrap, .series-wrap, .status-wrap{
+      .username-telephone-wrap,
+      .durtime-wrap,
+      .series-wrap,
+      .status-wrap {
         display: flex;
         flex-direction: row;
         margin-bottom: 29px;
       }
-      .status-wrap{
+      .status-wrap {
         margin-left: 60px;
       }
-      .tel{
+      .tel {
         margin-left: 22px;
       }
     }
   }
-  .add{
+  .add {
     font-size: 130px;
     position: fixed;
     right: 10px;

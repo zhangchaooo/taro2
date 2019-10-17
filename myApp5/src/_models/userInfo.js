@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import { getPersonalInfo } from '../_service/userInfo'
+import { getPersonalInfo, getNewPersonalInfo } from '../_service/userInfo'
 
 export default {
   namespace: 'userInfo',
@@ -52,33 +52,37 @@ export default {
   },
 
   effects: {
-    *getPersonalInfo({}, { call, put }) {
-      /* console.log('s') */
+    *getPersonalInfo({ payload }, { call, put }) {
+      const res = yield call(getPersonalInfo, { payload })
+      /* console.log(res) */
 
-      const res = yield call(getPersonalInfo)
-      if (res) {
-        console.log(
-          res
-          /* res[0].recipients_mobile,
-          res[0].recipients_name,
-          res[0].name,
-          res[0].created_at,
-          res[0].state */
-        )
-        yield put({
-          type: 'save',
-          payload: {
-            res
-          }
-        })
-      }
+      const response = res.data
+      console.log(response)
+
+      yield put({
+        type: 'save',
+        payload: {
+          res: response
+        }
+      })
+    },
+    *getNewPersonalInfo({ payload }, { call, put }) {
+      const res = yield call(getNewPersonalInfo, { payload })
+
+      const newResponse = res.data
+      console.log('this is new =>', newResponse)
+      /* const res = this.state.res.concat(newResponse) */
+      yield put({
+        type: 'save',
+        payload: {
+          res: newResponse
+        }
+      })
     }
   },
 
   reducers: {
     save(state, { payload }) {
-      /* console.log('001') */
-
       return { ...state, ...payload }
     }
   }

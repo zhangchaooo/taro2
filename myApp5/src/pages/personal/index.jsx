@@ -13,11 +13,11 @@ export default class Home extends Component {
     navigationBarTitleText: 'Home'
   }
   state = {
-    name: 'lison',
+    /*  name: 'lison',
     sex: '男',
     mobile: '13269875489',
     id_card: '132325198709210689',
-    unit: '顺丰'
+    unit: '顺丰' */
   }
   handleChangeAvatar = e => {
     console.log(e)
