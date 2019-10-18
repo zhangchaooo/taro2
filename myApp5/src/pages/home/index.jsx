@@ -20,7 +20,7 @@ export default class Home extends Component {
     name: '',
     selectorChecked: '家电',
     selector: ['家电', '家居', '建材', '其他'],
-    index: 0
+    index: 1
   }
   handleChange(value) {
     this.setState({
@@ -29,35 +29,18 @@ export default class Home extends Component {
     // 在小程序中，如果想改变 value 的值，需要 `return value` 从而改变输入框的当前值
     return value
   }
-  /*  onChange = e => {
-    this.setState({
-      selectorChecked: this.state.selector[e.detail.value]
-    })
-  }
-  onTimeChange = e => {
-    this.setState({
-      timeSel: e.detail.value
-    })
-  }
-  onDateChange = e => {
-    this.setState({
-      dateSel: e.detail.value
-    })
-  } */
   confirmDeposit = () => {
-    console.log('apo')
+    /*  console.log(this.state.index) */
     this.props.dispatch({
       type: 'deposit/deposit',
       payload: {
         recipients_name: this.props.recipients_name,
         recipients_mobile: this.props.recipients_mobile,
-        name: this.state.index
+        name: Number(this.state.index + 1)
       }
     })
   }
   getrecipients_name = event => {
-    console.log(1)
-
     this.props.dispatch({
       type: 'deposit/save',
       payload: { recipients_name: event }
@@ -72,10 +55,14 @@ export default class Home extends Component {
   getname = event => {
     const index = event.detail.value
     const value = this.props.selector[index]
-    console.log(value) // 家居，建材等可以打印出来
+    /* console.log(value)
+    console.log(Number(index + 1)) */
+    const indexs = Number(index) + 1
+    console.log('indexs is =>' + indexs)
+
     this.setState({
       selectorChecked: value,
-      index: index
+      index: indexs
     })
   }
 

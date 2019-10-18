@@ -5,78 +5,60 @@ import { View, Text } from '@tarojs/components'
 import { AtAvatar, AtTabs, AtTabsPane } from 'taro-ui'
 import './index.scss'
 
-import withLoad from '../../utils/withLoad'
-import Loading from '../../components/_Loading'
-
 /* import "~taro-ui/dist/style/components/avatar.scss" */
-@withLoad({
-  type: 'userInfo/getPersonalInfo',
-  listProp: 'res',
-  limit: 1
-})
 @connect(({ userInfo }) => ({
   ...userInfo
 }))
 export default class UserInfo extends Component {
   // eslint-disable-next-line react/sort-comp
   config = {
-    navigationBarTitleText: '用户信息页面'
+    navigationBarTitleText: '用户信息页面',
+    onReachBottomDistance: 50
   }
   state = {
     selector: ['男', '女'],
-    current: 0,
-    projectState: ['未取件', '已取件', '已逾期']
+    projectState: ['未取件', '已取件', '已逾期'],
+    page: 1,
+    limit: 6
     // eslint-disable-next-line taro/duplicate-name-of-state-and-props
-  }
-  handleChange(value) {
-    this.setState({
-      value
-    })
-    // 在小程序中，如果想改变 value 的值，需要 `return value` 从而改变输入框的当前值
-    return value
-  }
-  handleClick(value) {
-    this.setState({
-      current: value
-    })
-  }
-  onChange = e => {
-    this.setState({
-      selectorChecked: this.state.selector[e.detail.value]
-    })
-  }
-  onTimeChange = e => {
-    this.setState({
-      timeSel: e.detail.value
-    })
-  }
-  onDateChange = e => {
-    this.setState({
-      dateSel: e.detail.value
-    })
   }
   toPersonal = () => {
     Taro.navigateTo({
       url: '/pages/personal/index'
     })
   }
-  getPersonalInfo = () => {
+  getPersonalInfo = (page, limit) => {
     this.props.dispatch({
-      type: 'userInfo/getPersonalInfo'
+      type: 'userInfo/getPersonalInfo',
+      payload: {
+        page,
+        limit
+      }
     })
   }
+  getNewPersonalInfo = (page, limit) => {
+    this.props.dispatch({
+      type: 'userInfo/getNewPersonalInfo',
+      payload: {
+        page,
+        limit
+      }
+    })
+  }
+  onReachBottom() {
+    console.log('距离底部不远了')
+    const page = Number(this.state.page) + 1
+    const limit = this.state.limit
+    console.log(page, limit)
 
-  componentWillMount() {}
-
-  componentDidMount() {
-    this.getPersonalInfo()
+    this.getNewPersonalInfo(page, limit)
   }
 
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
+  componentDidMount() {
+    const page = this.state.page
+    const limit = this.state.limit
+    this.getPersonalInfo(page, limit)
+  }
 
   render() {
     const tabList = [
@@ -115,11 +97,7 @@ export default class UserInfo extends Component {
           </View>
         </View>
         <View className='TabsWrap'>
-          <AtTabs
-            current={this.state.current}
-            tabList={tabList}
-            onClick={this.handleClick.bind(this)}
-          >
+          <AtTabs current={this.state.current} tabList={tabList}>
             <AtTabsPane current={this.state.current} index={0}>
               <View style='background-color: #FAFBFC;text-align: center;'>
                 {/* for (let index = 0; index < res.length; index++) {
