@@ -7,3 +7,9 @@ export const userRegister = data =>
     method: 'POST',
     data
   })
+export const getMyAvatar = data =>
+  Request({
+    url: `/depositor/show`,
+    method: 'GET',
+    data
+  })

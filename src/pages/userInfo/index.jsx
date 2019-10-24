@@ -14,7 +14,7 @@ import './index.scss'
 @withLoad({
   type: 'check/getCheckList',
   listProp: 'checkList',
-  limit: 4
+  limit: 5
   /* isScrollView: 1 */
 })
 export default class UserInfo extends Component {
@@ -25,10 +25,10 @@ export default class UserInfo extends Component {
   state = {
     current: 0,
     page: 1,
-    limit: 4,
+    limit: 5,
     loading: false,
     selector: ['男', '女'],
-    projectState: ['未取件', '已取件', '已逾期']
+    projectState: ['待取件', '已取件', '已逾期']
   }
   toPersonal = () => {
     Taro.navigateTo({
@@ -39,6 +39,11 @@ export default class UserInfo extends Component {
   handleClick(value) {
     this.setState({
       current: value
+    })
+  }
+  continueToDeposite = () => {
+    Taro.navigateTo({
+      url: '/pages/home/index'
     })
   }
 
@@ -57,7 +62,7 @@ export default class UserInfo extends Component {
       { title: '已取件' },
       { title: '已逾期' }
     ]
-    const _afterThreeNoData = list.length && list.length < 4
+    const _afterThreeNoData = list.length && list.length < 2
     const _noData = noData || _afterThreeNoData
     const awaitExpress = list.filter(item => item.state === 1)
     const geted = list.filter(item => item.state === 2)
@@ -65,6 +70,10 @@ export default class UserInfo extends Component {
 
     return (
       <View className='index'>
+        <View
+          onClick={this.continueToDeposite.bind(this)}
+          className='at-icon at-icon-add add '
+        ></View>
         <View className='top'>
           <AtAvatar circle image={head_image} className='image'></AtAvatar>
           <View className='info-wrap'>
@@ -91,10 +100,11 @@ export default class UserInfo extends Component {
         </View>
         <View className='TabsWrap'>
           <AtTabs
-            animated={false}
+            animated
             current={this.state.current}
             tabList={tabList}
             onClick={this.handleClick.bind(this)}
+            swipeable
           >
             <AtTabsPane current={this.state.current} index={0}>
               <View>
@@ -183,7 +193,7 @@ export default class UserInfo extends Component {
               </View>
             </AtTabsPane>
             <AtTabsPane current={this.state.current} index={2}>
-              <View>
+              <View className='getPadding'>
                 {geted.length &&
                   geted.map(item => {
                     return (
@@ -225,7 +235,11 @@ export default class UserInfo extends Component {
                 />
               </View>
             </AtTabsPane>
-            <AtTabsPane current={this.state.current} index={3}>
+            <AtTabsPane
+              className='getPadding'
+              current={this.state.current}
+              index={3}
+            >
               <View>
                 {overTime.length &&
                   overTime.map(item => {

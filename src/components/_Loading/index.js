@@ -57,14 +57,14 @@ export default class Loading extends Component {
           '暂无内容'
         )
       ) : noMore ? (
-        '—— 加载更多 ——'
+        '—— 没有更多 ——'
       ) : mLoading ? (
         <AtActivityIndicator
           color='#6697E9'
           mode='center'
         ></AtActivityIndicator>
       ) : (
-        '—— 我是有底线的 ——'
+        '—— 上拉显示更多 ——'
       )
 
     const sContainer =

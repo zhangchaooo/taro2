@@ -27,18 +27,23 @@ export function loadList({
           [isRows ? 'rows' : 'limit']: limit || 10
         },
     callback: res => {
-      /* console.log('cb zou ni =>', res) */
-
       if (!res.code) {
+        console.log(res)
+        console.log(res.data)
+        console.log(res.meta.pagination)
+
         cb && cb(res)
-        /* console.log('uuu') */
-        /* const { list, total, current_page, per_page, data } = res.data */
-        /* const dataNum =
-          (current_page - 1) * per_page + (list ? list.length : data.length) */
+
+        const list = res.data
+        const { total, current_page, per_page } = res.meta.pagination
+        const dataNum =
+          (current_page - 1) * per_page + (list ? list.length : data.length)
 
         _this.setState({
           loading: false,
-          mLoading: false
+          mLoading: false,
+          noData: !total,
+          noMore: dataNum >= total
         })
       }
     }

@@ -110,7 +110,7 @@ export default class Index extends Component {
     Taro.chooseImage({
       count: 1,
       sizeType: ['compressed'],
-      sourceType: ['camera'],
+      sourceType: ['camera', 'album'],
       success: res => {
         const FileSystemManager = wx.getFileSystemManager()
         FileSystemManager.readFile({
@@ -132,6 +132,8 @@ export default class Index extends Component {
                 base_img: datab
               }
             }).then(res => {
+              console.log('happy =>', res)
+
               if (res.statusCode === 200) {
                 console.log(this)
                 const dataUrl = JSON.parse(res.data).file_url
@@ -151,6 +153,26 @@ export default class Index extends Component {
         console.log(err)
       }
     })
+  }
+
+  getMyAvatar = () => {
+    /* console.log('获得我的头像~~')
+    this.props.dispatch({
+      type: 'register/getMyAvatar'
+    }) */
+    Request({
+      url: `/depositor/show`,
+      method: 'GET'
+    }).then(res => {
+      /* console.log(res.depositor_wechat_user.head_image) */
+      this.setState({
+        head_image: res.depositor_wechat_user.head_image
+      })
+    })
+  }
+
+  componentDidMount() {
+    this.getMyAvatar()
   }
 
   render() {
@@ -215,9 +237,9 @@ export default class Index extends Component {
             />
             <AtInput
               className='input'
-              type='digit'
+              type='text'
               title='所属单位:'
-              placeholder='顺丰快递a'
+              placeholder='顺丰快递'
               value={this.state.unit}
               onChange={this.getUnit}
             />
@@ -226,7 +248,7 @@ export default class Index extends Component {
               className='btn-max-w'
               type='primary'
             >
-              注册登录
+              登录/注册
             </AtButton>
             {/* <AtButton onClick={this.toHome} className='btna' type='primary'>ToHome</AtButton> */}
           </AtForm>

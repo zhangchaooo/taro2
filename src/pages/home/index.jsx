@@ -21,7 +21,7 @@ export default class Home extends Component {
     recipients_mobile: '',
     name: '',
     selectorChecked: '家电',
-    selector: ['家电', '家居', '建材', '其他'],
+    selector: ['家电', '家居', '建材', '其他', '快递'],
     index: 1,
     remark: '已与客户约定派送时间，同意代为签收'
   }
@@ -140,7 +140,9 @@ export default class Home extends Component {
             >
               确认
             </AtButton>
-            <AtButton onClick={this.toUserInfoPage}>寄存查询</AtButton>
+            <AtButton onClick={this.toUserInfoPage.bind(this)}>
+              寄存查询
+            </AtButton>
           </AtForm>
         </View>
       </View>

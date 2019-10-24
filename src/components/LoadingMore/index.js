@@ -21,7 +21,7 @@ export default class MyAvatar extends Component {
         mode='center'
       ></AtActivityIndicator>
     ) : (
-      '—— 我是有底线的 ——'
+      '—— 上拉显示更多 ——'
     )
     let styles
     if (loading || noData) {
