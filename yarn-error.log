@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Tj\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add hammerjs --silent --no-progress
+  C:\Program Files\nodejs\node.exe C:\Users\Tj\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add components --silent --no-progress
 
 PATH: 
-  C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin;D:\Myzone\taro2\taro2\myApp5\node_modules\.bin;C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin;D:\Myzone\taro2\taro2\myApp5\node_modules\.bin;C:\Users\Tj\bin;D:\Git\mingw64\bin;D:\Git\usr\local\bin;D:\Git\usr\bin;D:\Git\usr\bin;D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\Tj\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;D:\Microsoft VS Code\bin;C:\Program Files\nodejs;D:\Git\cmd;D:\Git\mingw64\bin;D:\Git\usr\bin;C:\WINDOWS\System32\OpenSSH;C:\Users\Tj\AppData\Local\Microsoft\WindowsApps;C:\Users\Tj\AppData\Roaming\npm;D:\Egret Wing 3\bin;C:\Users\Tj\AppData\Local\Programs\Microsoft VS Code\bin;D:\Git\usr\bin\vendor_perl;D:\Git\usr\bin\core_perl
+  C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin;D:\Myzone\taro2\taro2\node_modules\.bin;C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin;D:\Myzone\taro2\taro2\node_modules\.bin;C:\Users\Tj\bin;D:\Git\mingw64\bin;D:\Git\usr\local\bin;D:\Git\usr\bin;D:\Git\usr\bin;D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\Tj\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;D:\Microsoft VS Code\bin;C:\Program Files\nodejs;D:\Git\cmd;D:\Git\mingw64\bin;D:\Git\usr\bin;C:\WINDOWS\System32\OpenSSH;C:\Users\Tj\AppData\Local\Microsoft\WindowsApps;C:\Users\Tj\AppData\Roaming\npm;D:\Egret Wing 3\bin;C:\Users\Tj\AppData\Local\Programs\Microsoft VS Code\bin;D:\Git\usr\bin\vendor_perl;D:\Git\usr\bin\core_perl
 
 Yarn version: 
   1.19.0
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\Tj\AppData\Local\Yarn\Cache\v5\npm-avatar-upload-2.0.0-6bb2ccede267e5ec9ba04a06d1dcc411aa05748b\node_modules\avatar-upload\.yarn-tarball.tgz'
+  Error: EPERM: operation not permitted, unlink 'C:\Users\Tj\AppData\Local\Yarn\Cache\v5\npm-core-js-2.6.10-8a5b8391f8cc7013da703411ce5b585706300d7f\node_modules\core-js\.yarn-tarball.tgz'
 
 npm manifest: 
   {
@@ -61,16 +61,20 @@ npm manifest:
       "@tarojs/taro-tt": "1.3.19",
       "@tarojs/taro-weapp": "1.3.19",
       "avatar-upload": "^2.0.0",
+      "better-scroll": "^1.15.2",
+      "components": "^0.1.0",
       "dva-core": "^2.0.0",
       "dva-loading": "^3.0.14",
       "hammerjs": "^2.0.8",
       "jquery": "^3.4.1",
       "nerv-devtools": "^1.4.0",
       "nervjs": "^1.4.0",
+      "react-bscroll": "^1.0.7",
       "react-qiniu-avatar-upload": "^1.0.5",
       "redux": "^4.0.4",
       "redux-logger": "^3.0.6",
       "redux-thunk": "^2.3.0",
+      "taro-icons": "^0.3.0",
       "taro-ui": "^2.2.2"
     },
     "devDependencies": {

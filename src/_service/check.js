@@ -14,7 +14,7 @@ export const gettopInfo = data =>
   })
 
 export const getNewPersonalInfo = ({ payload }) => {
-  console.log('new =>', payload)
+  /* console.log('new =>', payload) */
   return Request({
     url:
       '/depositor/check-list?page=' +

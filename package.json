@@ -43,6 +43,7 @@
     "@tarojs/taro-weapp": "1.3.19",
     "avatar-upload": "^2.0.0",
     "better-scroll": "^1.15.2",
+    "components": "^0.1.0",
     "dva-core": "^2.0.0",
     "dva-loading": "^3.0.14",
     "hammerjs": "^2.0.8",
@@ -54,6 +55,8 @@
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "taro-icons": "^0.3.0",
+    "taro-listview": "^1.1.11",
     "taro-ui": "^2.2.2"
   },
   "devDependencies": {

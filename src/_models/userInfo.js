@@ -110,7 +110,7 @@ export default {
 
   reducers: {
     save(state, { payload }) {
-      console.log('pay', payload)
+      /* console.log('pay', payload) */
       return { ...state, ...payload }
     }
   }

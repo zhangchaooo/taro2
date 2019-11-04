@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
+import { AtButton, AtIcon } from 'taro-ui'
+/* import IconFont from '../../components/iconfont/weapp/weapp' */
 import './index.scss'
 /* import "~taro-ui/dist/style/components/avatar.scss" */
 
@@ -10,16 +11,6 @@ export default class Success extends Component {
     navigationBarTitleText: 'Success页面'
   }
   state = {}
-
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
 
   render() {
     return (
@@ -45,6 +36,7 @@ export default class Success extends Component {
         >
           寄存查询
         </AtButton>
+        {/* <Text class='icon iconfont'>&#xe661;</Text> */}
       </View>
     )
   }

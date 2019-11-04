@@ -178,18 +178,18 @@ export default class Index extends Component {
   render() {
     return (
       <View className='index'>
-        <View className='uploadAvatar'>
+        <View className='uploadAvatar' onClick={this.toUpload}>
           <AtAvatar
             size='large'
             circle
             image={this.state.head_image}
           ></AtAvatar>
         </View>
-        <View className='uploadBtn'>
+        {/*  <View className='uploadBtn'>
           <AtButton type='primary' onClick={this.toUpload}>
             点击更换头像
           </AtButton>
-        </View>
+        </View> */}
         <View className='formWrap'>
           <AtForm className='form'>
             <View>

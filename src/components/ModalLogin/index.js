@@ -22,9 +22,19 @@ export default class ModalLogin extends Component {
       success: res => {
         const { encryptedData, iv, userInfo } = e.detail
         /* console.log(encryptedData, iv, res.code) */
-        console.log(iv)
-        console.log(res.code)
+        /* console.log(
+          'iv is =>',
+          iv,
+          'code is =>',
+          res.code,
+          'data is =>',
+          encryptedData
+        ) */
+        /* console.log('code is =>', res.code)
         console.log(userInfo)
+        console.log('data is =>', encryptedData) */
+
+        /* return */
 
         dispatch({
           type: 'member/login',
@@ -43,18 +53,18 @@ export default class ModalLogin extends Component {
                   userInfo: { nickname: nickName, imageheadurl: avatarUrl }
                 }
               })
+
               Taro.showToast({
-                title: '登录成功',
-                icon: 'none'
+                title: '登录成功,正在加载...',
+                icon: 'success',
+                duration: 1500,
+                mask: true
+              }).then(() => {
+                Taro.navigateTo({
+                  url: '/pages/userInfo/index'
+                })
               })
-              this.props.onCancel(1)
-              /* authReLaunch({
-                path: '/pages/index/index',
-                failCb: () => this.setState({ showLogin: true })
-              }) */
-              Taro.navigateTo({
-                url: '/pages/index/index'
-              })
+              /* this.props.onCancel(1) */
             } else {
               Taro.showToast({
                 title: res.message,

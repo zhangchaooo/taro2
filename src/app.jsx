@@ -10,6 +10,7 @@ import './app.scss'
 import './styles/base.scss'
 import './styles/common.scss'
 import './custom-variables.scss'
+import 'taro-icons/scss/Ionicons.scss'
 
 const dvaApp = dva.createApp({
   initialState: {},
@@ -18,22 +19,16 @@ const dvaApp = dva.createApp({
 const store = dvaApp.getStore()
 
 class App extends Component {
-  componentDidMount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
-
-  componentDidCatchError() {}
-
   config = {
     pages: [
+      'pages/userInfoModel/index',
+      'pages/personal/index',
       'pages/index/index',
       'pages/home/index',
       'pages/success/index',
       'pages/userInfo/index',
-      'pages/personal/index',
-      'pages/login/index'
+      'pages/login/index',
+      'pages/listPage/index'
     ],
     window: {
       backgroundTextStyle: 'dark',

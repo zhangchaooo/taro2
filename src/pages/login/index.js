@@ -1,6 +1,5 @@
 /* eslint-disable react/sort-comp */
 import Taro, { Component } from '@tarojs/taro'
-import { connect } from '@tarojs/redux'
 import { View } from '@tarojs/components'
 import MyButton from '../../components/MyButton'
 import { authReLaunch } from '../../utils/index'

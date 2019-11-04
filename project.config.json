@@ -1,6 +1,6 @@
 {
 	"miniprogramRoot": "dist/",
-	"projectname": "myApp5",
+	"projectname": "taro2a",
 	"description": "5",
 	"appid": "wx25f48676bb43c1af",
 	"setting": {
@@ -85,6 +85,20 @@
 					"id": -1,
 					"name": "pages/userInfo/index",
 					"pathName": "pages/userInfo/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/listPage/index",
+					"pathName": "pages/listPage/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "pages/userInfoModel/index",
+					"pathName": "pages/userInfoModel/index",
 					"query": "",
 					"scene": null
 				}

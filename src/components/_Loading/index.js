@@ -1,9 +1,9 @@
-import Taro, { Component } from '@tarojs/taro'
+import { Component } from '@tarojs/taro'
 import { AtActivityIndicator } from 'taro-ui'
 import { View } from '@tarojs/components'
 import './index.scss'
 /**
- * 包裹组建的元素的宽高决定 loading和noData背景的宽高
+ * 包裹组件的元素的宽高决定 loading和noData背景的宽高
  * 父元素定位relative
  */
 export default class Loading extends Component {
@@ -25,16 +25,12 @@ export default class Loading extends Component {
     }
     const sContainerBlock = {
       position: 'relative',
-      // background: 'rgba(0,0,0,0.5)',
       color: '#999',
       width: '100%',
       height: '50px',
       textAlign: 'center',
       fontSize: '12px',
       lineHeight: '50px'
-      // paddingTop: '25px',
-      // paddingBottom: '25px',
-      // zIndex: '-10000'
     }
 
     const _oneLoading =
@@ -42,7 +38,6 @@ export default class Loading extends Component {
       mLoading === undefined &&
       noMore === undefined &&
       noData === undefined
-
     const cnt =
       loading || _oneLoading ? (
         <AtActivityIndicator
@@ -64,29 +59,12 @@ export default class Loading extends Component {
           mode='center'
         ></AtActivityIndicator>
       ) : (
-        '—— 上拉显示更多 ——'
+        '—— 没有更多 ——'
       )
 
     const sContainer =
       loading || noData || _oneLoading ? sContainerFull : sContainerBlock
 
-    return (
-      <View style={sContainer}>
-        {cnt}
-        {/* {loading || (
-        loading === undefined &&
-        mLoading === undefined &&
-        noMore === undefined &&
-        noData === undefined)
-          ? <AtActivityIndicator color='#6697E9' mode='center'></AtActivityIndicator>
-          : noData
-            ? '暂无内容'
-            : noMore
-                ? '—— 没有更多 ——'
-                : mLoading
-                  ? <AtActivityIndicator color='#6697E9' mode='center'></AtActivityIndicator>
-                  : '—— 上拉显示更多 ——'} */}
-      </View>
-    )
+    return <View style={sContainer}>{cnt}</View>
   }
 }

@@ -9,9 +9,18 @@
   .top {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    /* align-items: center; */
+    /* background: chocolate; */
     width: 100%;
-    margin-left: 150px;
     margin-top: 60px;
+    .at-badge__num {
+      font-size: 30px;
+      background: orange;
+    }
+    .at-fab--normal {
+      font-size: 24px;
+    }
     .info-wrap {
       /* background: red; */
       width: 100%;
@@ -19,6 +28,10 @@
       margin-left: 60px;
       display: flex;
       justify-content: space-around;
+      .iconfont {
+        font-size: 30px;
+        margin-left: 10px;
+      }
       .item {
         flex: 1;
       }
@@ -109,12 +122,13 @@
     }
   }
   .add {
-    font-size: 120px;
+    font-size: 100px;
     background: orange;
     color: white;
     position: fixed;
     right: 48px;
     bottom: 61px;
+    padding: 10px;
     border-radius: 50%;
     z-index: 2;
   }

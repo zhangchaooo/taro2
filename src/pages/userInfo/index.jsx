@@ -1,9 +1,20 @@
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
 import { View, Text } from '@tarojs/components'
-import { AtAvatar, AtTabs, AtTabsPane } from 'taro-ui'
+import {
+  AtAvatar,
+  AtTabs,
+  AtTabsPane,
+  AtFab,
+  AtModal,
+  AtModalHeader,
+  AtModalContent,
+  AtModalAction,
+  AtBadge
+} from 'taro-ui'
 import withLoad from '../../utils/withLoad'
 import Loading from '../../components/_Loading'
+import ModalLogin from '../../components/ModalLogin/index.js'
 
 import './index.scss'
 
@@ -28,7 +39,13 @@ export default class UserInfo extends Component {
     limit: 5,
     loading: false,
     selector: ['男', '女'],
-    projectState: ['待取件', '已取件', '已逾期']
+    projectState: ['待取件', '已取件', '已逾期'],
+    showLogin: false,
+    mLoading: false,
+    noMore: '没有更多',
+    noData: '没有数据',
+    avatarUrl: '',
+    nickName: ''
   }
   toPersonal = () => {
     Taro.navigateTo({
@@ -47,14 +64,43 @@ export default class UserInfo extends Component {
     })
   }
 
+  onButtonClick = () => {
+    this.setState({
+      showLogin: true
+    })
+  }
+  cancel = () => {
+    this.setState({ showLogin: false })
+  }
+  componentDidMount() {
+    Taro.getUserInfo({
+      success: res => {
+        /* console.log('banben', res.userInfo.nickName) */
+        this.setState({
+          avatarUrl: res.userInfo.avatarUrl,
+          nickName: res.userInfo.nickName
+        })
+      }
+    })
+  }
+
   render() {
-    const { loading, mLoading, noMore, noData } = this.state
+    const {
+      loading,
+      mLoading,
+      noMore,
+      noData,
+      avatarUrl,
+      nickName
+    } = this.state
     const {
       checkList: { list },
       name,
       head_image,
       id_card,
-      resx
+      resx,
+      sex,
+      noDataText
     } = this.props
     const tabList = [
       { title: '全部' },
@@ -62,11 +108,18 @@ export default class UserInfo extends Component {
       { title: '已取件' },
       { title: '已逾期' }
     ]
+    const sexArray = ['&#xe661;', '&#xe690;']
     const _afterThreeNoData = list.length && list.length < 2
     const _noData = noData || _afterThreeNoData
-    const awaitExpress = list.filter(item => item.state === 1)
-    const geted = list.filter(item => item.state === 2)
-    const overTime = list.filter(item => item.state === 3)
+    const awaitExpress = list.filter(item => {
+      return item.state === 1
+    })
+    const geted = list.filter(item => {
+      return item.state === 2
+    })
+    const overTime = list.filter(item => {
+      return item.state === 3
+    })
 
     return (
       <View className='index'>
@@ -75,14 +128,17 @@ export default class UserInfo extends Component {
           className='at-icon at-icon-add add '
         ></View>
         <View className='top'>
-          <AtAvatar circle image={head_image} className='image'></AtAvatar>
-          <View className='info-wrap'>
+          <AtBadge value={nickName}>
+            <AtAvatar circle image={avatarUrl} className='image'></AtAvatar>
+          </AtBadge>
+          {/* <View className='info-wrap'>
             <View className='top-info item item1'>
               <View className='top-info-name item item1'>
                 <View className='btn-max-y'>
                   <Text>{name}</Text>
                 </View>
-                <View size='25' className='at-icon at-icon-heart'></View>
+                {this.sexRender.bind(this)}
+                <Text class='icon iconfont'>&#xe661;</Text>
               </View>
               <View className='top-info-number item item2'>
                 <View className='btn-max-y'>
@@ -96,7 +152,7 @@ export default class UserInfo extends Component {
             >
               <View size='25' className='at-icon at-icon-chevron-right'></View>
             </View>
-          </View>
+          </View> */}
         </View>
         <View className='TabsWrap'>
           <AtTabs
@@ -193,7 +249,7 @@ export default class UserInfo extends Component {
               </View>
             </AtTabsPane>
             <AtTabsPane current={this.state.current} index={2}>
-              <View className='getPadding'>
+              <View className='getPaddings'>
                 {geted.length &&
                   geted.map(item => {
                     return (
@@ -236,7 +292,7 @@ export default class UserInfo extends Component {
               </View>
             </AtTabsPane>
             <AtTabsPane
-              className='getPadding'
+              className='getPaddings'
               current={this.state.current}
               index={3}
             >
