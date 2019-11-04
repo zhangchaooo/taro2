@@ -17,23 +17,28 @@ export default class Home extends Component {
     navigationBarTitleText: '快件登记页面'
   }
   state = {
+    community_name: [],
+    community_id: [],
     recipients_name: '',
     recipients_mobile: '',
     name: '',
     selectorChecked: '家电',
+    selectorCheckedCommunity: '金座伊方锦',
     selector: ['家电', '家居', '建材', '其他', '快递'],
     index: 1,
-    remark: '已与客户约定派送时间，同意代为签收'
+    remark: '已与客户约定派送时间，同意代为签收',
+    community_id_selected: 1
   }
 
   constructor() {}
 
   confirmDeposit = () => {
-    console.log('confirm deposite')
+    /*  console.log('confirm deposite') */
     Request({
       url: `/depositor/check-in`,
       method: 'POST',
       data: {
+        community_id: this.state.community_id_selected,
         recipients_name: this.state.recipients_name,
         recipients_mobile: this.state.recipients_mobile,
         name: Number(this.state.index + 1),
@@ -50,13 +55,13 @@ export default class Home extends Component {
     })
   }
   getrecipients_mobile = event => {
-    console.log(event)
+    /*  console.log(event) */
     this.setState({
       recipients_mobile: event
     })
   }
   get_all_info = event => {
-    console.log('remarks information')
+    /* console.log('remarks information') */
     this.setState({
       remark: event
     })
@@ -67,11 +72,29 @@ export default class Home extends Component {
     /* console.log(value)
     console.log(Number(index + 1)) */
     const indexs = Number(index) + 1
-    console.log('indexs is =>' + indexs)
+    /* console.log('indexs is =>' + indexs) */
 
     this.setState({
       selectorChecked: value,
       index: indexs
+    })
+  }
+  getCommunity_name = event => {
+    /* console.log('inin') */
+
+    const index = event.detail.value
+    const value = this.state.community_name[index]
+    /*  console.log('value', value) */
+    /* console.log(Number(index + 1)) */
+    const indexs = Number(index)
+    /* console.log('indexs is =>' + indexs)
+    console.log('ida', this.state.community_id[indexs]) */
+    const community_id_selected = this.state.community_id[indexs]
+
+    this.setState({
+      selectorCheckedCommunity: value,
+      index: indexs,
+      community_id_selected
     })
   }
 
@@ -81,7 +104,32 @@ export default class Home extends Component {
     })
   }
 
-  componentDidMount() {}
+  getCommunityInfo = () => {
+    /* console.log('community') */
+    Request({
+      url: `/community/list`,
+      method: 'GET'
+    }).then(res => {
+      /* console.log(res) */
+      let community_name = []
+      let community_id = []
+
+      res.map(item => {
+        community_name.push(item.name)
+        community_id.push(item.id)
+      })
+      /*  console.log('aaa', community_name, community_id) */
+
+      this.setState({
+        community_id,
+        community_name
+      })
+    })
+  }
+
+  componentDidMount() {
+    this.getCommunityInfo()
+  }
 
   render() {
     return (
@@ -124,6 +172,19 @@ export default class Home extends Component {
                 <View className='picker'>
                   <Text className='txt'>寄存物品: </Text>
                   {this.state.selectorChecked}
+                </View>
+              </Picker>
+            </View>
+            <View className='page-section'>
+              <Picker
+                className='input'
+                mode='selector'
+                range={this.state.community_name}
+                onChange={this.getCommunity_name.bind(this)}
+              >
+                <View className='picker'>
+                  <Text className='txt'>社区名称: </Text>
+                  {this.state.selectorCheckedCommunity}
                 </View>
               </Picker>
             </View>

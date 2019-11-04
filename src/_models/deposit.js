@@ -14,7 +14,7 @@ export default {
   effects: {
     *deposit({ payload }, { call, put }) {
       yield call(deposit, payload)
-      console.log(payload)
+      /* console.log(payload) */
       yield put({ type: 'save', payload })
     }
   },
