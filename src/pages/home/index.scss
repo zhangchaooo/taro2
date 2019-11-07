@@ -40,22 +40,6 @@
         }
       }
     }
-    .btn-max-w {
-      margin-top: 50px;
-      margin-bottom: 50px;
-      border: none;
-      text-align: center;
-      align-items: center;
-    }
-    .btn-max-y {
-      margin-top: 50px;
-      height: 60px;
-      line-height: 60px;
-      border: none;
-      text-align: center;
-      justify-content: center;
-      font-weight: bold;
-    }
   }
 }
 .index {
@@ -67,11 +51,14 @@
     height: 80px;
     line-height: 80px;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 15px;
   }
   .formWrap {
     display: flex;
+    .at-form {
+      padding-bottom: 20px;
+    }
     .picker {
       display: flex;
       font-size: 35px;
@@ -115,8 +102,10 @@
     }
     .btn-max-y {
       margin-top: 50px;
-      height: 60px;
-      line-height: 60px;
+      margin-bottom: 30px;
+      background-color: #ffab0a;
+      /*  height: 60px;
+      line-height: 60px; */
       border: none;
       text-align: center;
       justify-content: center;

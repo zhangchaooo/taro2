@@ -1,6 +1,7 @@
 import { Component } from '@tarojs/taro'
 import { AtActivityIndicator } from 'taro-ui'
-import { View } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
+import notAnyThing from '../../images/component/dcce8708d7c76e0109c74195fd85452.png'
 import './index.scss'
 /**
  * 包裹组件的元素的宽高决定 loading和noData背景的宽高
@@ -15,8 +16,8 @@ export default class Loading extends Component {
       let: 0,
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center',
-      background: noData ? '#f1f1f1' : 'rgba(0,0,0,0.5)',
+      /* alignItems: 'center', */
+      background: noData ? '#fff' : 'rgba(0,0,0,0.5)',
       color: noData ? '#999' : '#fff',
       width: '100%',
       height: '100%',
@@ -49,7 +50,14 @@ export default class Loading extends Component {
         noDataText ? (
           noDataText
         ) : (
-          '暂无内容'
+          <View>
+            <Image
+              style='width: 140px;height: 140px;color: #ffab0a'
+              src={notAnyThing}
+              className='nullImage'
+            ></Image>
+            <View className='notAnyThing'>暂无快递信息</View>
+          </View>
         )
       ) : noMore ? (
         '—— 没有更多 ——'

@@ -7,6 +7,8 @@ import Img from '../_Img'
 import AuthImg from '../../images/component/auth.jpg'
 import './index.scss'
 import authReLaunch from '../../utils/index'
+import Request from '../../utils/request'
+import ListView, { LazyBlock } from 'taro-listview'
 
 @connect(({}) => ({}))
 export default class ModalLogin extends Component {
@@ -53,18 +55,31 @@ export default class ModalLogin extends Component {
                   userInfo: { nickname: nickName, imageheadurl: avatarUrl }
                 }
               })
+              dispatch({
+                type: 'check/getCheckList',
+                payload: {
+                  limit: 5,
+                  page: 1
+                }
+              })
 
               Taro.showToast({
-                title: '登录成功,正在加载...',
+                title: '登录成功',
                 icon: 'success',
                 duration: 1500,
                 mask: true
               }).then(() => {
-                Taro.navigateTo({
-                  url: '/pages/userInfo/index'
-                })
+                /*    Taro.navigateTo({
+                  url: '/pages/userInfoModel/index'
+                }) */
+                this.props.onCancel(1)
+                /* Request({
+                  url: '/depositor/check-list',
+                  method: 'GET'
+                }).then(res => {
+                  console.log('loadwuliao is => ', res)
+                }) */
               })
-              /* this.props.onCancel(1) */
             } else {
               Taro.showToast({
                 title: res.message,

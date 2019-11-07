@@ -42,6 +42,7 @@ export default class Index extends Component {
         page: pIndex
       }
     })
+    console.log({data})
     return { list: data, hasMore: true, isLoaded: pIndex === 1 }
   }
 

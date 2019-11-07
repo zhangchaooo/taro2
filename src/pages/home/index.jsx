@@ -14,7 +14,7 @@ import Request from '../../utils/request'
 export default class Home extends Component {
   // eslint-disable-next-line react/sort-comp
   config = {
-    navigationBarTitleText: '快件登记页面'
+    navigationBarTitleText: '快件登记'
   }
   state = {
     community_name: [],
@@ -201,7 +201,11 @@ export default class Home extends Component {
             >
               确认
             </AtButton>
-            <AtButton onClick={this.toUserInfoPage.bind(this)}>
+            <AtButton
+              className='btn-max-y'
+              type='primary'
+              onClick={this.toUserInfoPage.bind(this)}
+            >
               寄存查询
             </AtButton>
           </AtForm>

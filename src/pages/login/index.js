@@ -20,7 +20,7 @@ export default class Index extends Component {
   }
 
   config = {
-    navigationBarTitleText: '授权登录页',
+    navigationBarTitleText: '授权登录',
     usingComponents: {
       ModalLogin: '../../components/LoadingMore/index' // 书写第三方组件的相对路径
     }

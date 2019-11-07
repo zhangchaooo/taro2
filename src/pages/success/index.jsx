@@ -8,7 +8,7 @@ import './index.scss'
 export default class Success extends Component {
   // eslint-disable-next-line react/sort-comp
   config = {
-    navigationBarTitleText: 'Success页面'
+    navigationBarTitleText: '寄存成功'
   }
   state = {}
 

@@ -16,7 +16,7 @@ export default class Index extends Component {
 
   // eslint-disable-next-line react/sort-comp
   config = {
-    navigationBarTitleText: '注册页'
+    navigationBarTitleText: '注册'
   }
   constructor() {
     super(...arguments)

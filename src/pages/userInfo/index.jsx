@@ -30,7 +30,7 @@ import './index.scss'
 })
 export default class UserInfo extends Component {
   config = {
-    navigationBarTitleText: '寄存列表查询页面',
+    navigationBarTitleText: '寄存列表',
     onReachBottomDistance: 50
   }
   state = {
@@ -54,8 +54,41 @@ export default class UserInfo extends Component {
   }
 
   handleClick(value) {
+    let i = value + 1
+    this.setState({ loading: true })
+    const state_type =
+      i === 1
+        ? 'state_new'
+        : i === 2
+        ? 'state_pay'
+        : i === 3
+        ? 'state_send'
+        : i === 4
+        ? 'state_success'
+        : i === 5
+        ? 'state_cancle'
+        : ''
     this.setState({
-      current: value
+      current: i,
+      state_type
+    })
+    this.props.dispatch({
+      type: 'user/orderList',
+      payload:
+        i === 0 ? { page: 1, limit: 10 } : { page: 1, limit: 10, state_type },
+      callback: res => {
+        if (res.code === 0) {
+          const { list, total, current_page, per_page } = res.data
+          const dataNum = (current_page - 1) * per_page + list.length
+          this.setState({
+            page: 1,
+            loading: false,
+            moreLoading: false,
+            noData: !total,
+            noMore: dataNum == total
+          })
+        }
+      }
     })
   }
   continueToDeposite = () => {

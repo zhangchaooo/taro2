@@ -1,21 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
-import { View, Text } from '@tarojs/components'
-import {
-  AtAvatar,
-  AtTabs,
-  AtTabsPane,
-  AtFab,
-  AtModal,
-  AtModalHeader,
-  AtModalContent,
-  AtModalAction,
-  AtBadge
-} from 'taro-ui'
-import withLoad from '../../utils/withLoad'
+import { View, Image } from '@tarojs/components'
+import { AtTabs, AtTabsPane, AtFab } from 'taro-ui'
 import Loading from '../../components/_Loading'
 import ModalLogin from '../../components/ModalLogin/index.js'
 import notLogin from '../../images/component/e49b2415cf2e0914b924d9a27f2013e.png'
+import withLoad from '../../utils/withLoad'
 
 import './index.scss'
 
@@ -42,11 +32,11 @@ export default class UserInfo extends Component {
     selector: ['男', '女'],
     projectState: ['待取件', '已取件', '已逾期'],
     showLogin: false,
+    loading: false,
     mLoading: false,
     noMore: '没有更多',
-    noData: '没有数据',
-    avatarUrl: '',
-    nickName: ''
+    _noData: '暂无内容'
+    /* _afterThreeNoData: '数据不足三条' */
   }
   toPersonal = () => {
     Taro.navigateTo({
@@ -55,116 +45,38 @@ export default class UserInfo extends Component {
   }
 
   handleClick(value) {
-    let i = value
-    this.setState({ loading: true })
-    const state_type =
-      i === 0
-        ? 'state_new'
-        : i === 1
-        ? 'state_pay'
-        : i === 2
-        ? 'state_send'
-        : i === 3
-        ? 'state_success'
-        : i === 4
-        ? 'state_cancle'
-        : ''
     this.setState({
-      current: i,
-      state_type
-    })
-    this.props.dispatch({
-      type: 'check/getCheckList',
-      payload:
-        i === 0 ? { page: 1, limit: 10 } : { page: 1, limit: 10, state_type },
-      callback: res => {
-        if (res.code === 0) {
-          const { list, total, current_page, per_page } = res.data
-          const dataNum = (current_page - 1) * per_page + list.length
-          this.setState({
-            page: 1,
-            loading: false,
-            moreLoading: false,
-            noData: !total,
-            noMore: dataNum == total
-          })
-        }
-      }
+      current: value
     })
   }
   continueToDeposite = () => {
-    console.log(222222)
-    this.props.dispatch({
-      type: 'check/getCheckList',
-      payload: {
-        zhangchao: 1,
-        limit: 5,
-        page: 1
-      },
-      callback: res => {
-        console.log('res', res)
-        const { data, meta } = res
-        const dataNum =
-          (meta.pagination.current_page - 1) * meta.pagination.per_page +
-          data.length
-        this.setState({
-          page: 1,
-          loading: false,
-          moreLoading: false,
-          noData: !meta.pagination.total,
-          noMore: dataNum == meta.pagination.total
-        })
-        console.log('state', this.state)
-        const { checkList } = this.props
-        console.log('porps.checklist', checkList)
-      }
-    })
-
-    /* Taro.navigateTo({
+    Taro.navigateTo({
       url: '/pages/home/index'
-    }) */
+    })
   }
 
   onButtonClick = () => {
+    /* console.log('xuanfuanniu') */
     this.setState({
       showLogin: true
     })
   }
   cancel = () => {
     this.setState({ showLogin: false })
+    /* console.log('cancel') */
   }
-  componentDidMount() {
-    /*  console.log('state', this.state) */
-    Taro.getUserInfo({
-      success: res => {
-        /* console.log('res', res.userInfo.nickName) */
-        this.setState({
-          avatarUrl: res.userInfo.avatarUrl,
-          nickName: res.userInfo.nickName
-        })
-      }
-    })
-  }
+  componentDidMount() {}
 
   render() {
-    const {
-      loading,
-      mLoading,
-      noMore,
-      noData,
-      avatarUrl,
-      nickName
-    } = this.state
+    const { loading, mLoading, noMore, _noData, _afterThreeNoData } = this.state
     const {
       checkList: { list },
       name,
       head_image,
       id_card,
       resx,
-      sex,
-      noDataText
+      sex
     } = this.props
-    console.log(list)
     const tabList = [
       { title: '全部' },
       { title: '待取件' },
@@ -172,25 +84,19 @@ export default class UserInfo extends Component {
       { title: '已逾期' }
     ]
     const sexArray = ['&#xe661;', '&#xe690;']
-    const _afterThreeNoData = list.length && list.length < 2
-    const _noData = noData || _afterThreeNoData
-    /* console.log('没有', _noData) */
-    const awaitExpress = list.filter(item => {
-      return item.state === 1
-    })
-    const geted = list.filter(item => {
-      return item.state === 2
-    })
-    const overTime = list.filter(item => {
-      return item.state === 3
-    })
+    /*  const _afterThreeNoData = list.length && list.length < 2 */
+    /* const _noData = _noData || _afterThreeNoData */
+    const awaitExpress = list.filter(item => item.state === 1)
+    const geted = list.filter(item => item.state === 2)
+    const overTime = list.filter(item => item.state === 3)
+    console.log('lsit', list)
 
     return (
       <View className='index'>
-        <View
+        {/* <View
           onClick={this.continueToDeposite.bind(this)}
           className='at-icon at-icon-add add '
-        ></View>
+        ></View> */}
         <View className='top'>
           {/* <AtAvatar circle image={head_image} className='image'></AtAvatar> */}
           <ModalLogin
@@ -305,7 +211,7 @@ export default class UserInfo extends Component {
               </View>
             </AtTabsPane>
             <AtTabsPane current={this.state.current} index={2}>
-              <View className='getPaddings'>
+              <View className='getPadding'>
                 {geted.length &&
                   geted.map(item => {
                     return (
@@ -348,7 +254,7 @@ export default class UserInfo extends Component {
               </View>
             </AtTabsPane>
             <AtTabsPane
-              className='getPaddings'
+              className='getPadding'
               current={this.state.current}
               index={3}
             >
