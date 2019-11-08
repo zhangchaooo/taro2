@@ -2,10 +2,10 @@ import Taro from '@tarojs/taro'
 import { baseUrl } from '../config'
 
 export default (options = { method: 'GET', data: {} }) => {
-  Taro.setStorageSync(
+  /* Taro.setStorageSync(
     'access_token',
     'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMC4wLjAuNlwvZXhwcmVzc1wvbWluaVwvdGVzdC1sb2dpbiIsImlhdCI6MTU3MTM4ODA0NywiZXhwIjoxNTc0Mzg4MDQ3LCJuYmYiOjE1NzEzODgwNDcsImp0aSI6ImYzV2FXTmJnYW9lSXExUE8iLCJzdWIiOjEsInBydiI6IjY1NjdkNTQ2YjU5M2RlNzRjMGIyZDU0YzdhMGMyOGEwMzY0M2Q0N2QiLCJndWFyZCI6InVzZXIifQ.Qe8IwhxSIAiG3mXtlbibflJB2YnEfUwdLFsOPRNaQ0c'
-  )
+  ) */
   const access_token = Taro.getStorageSync('access_token')
   return Taro.request({
     url: baseUrl + options.url,

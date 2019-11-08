@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
-import { View, Text } from '@tarojs/components'
+import { View, Text, ScrollView } from '@tarojs/components'
 import {
   AtAvatar,
   AtTabs,
@@ -62,7 +62,7 @@ export default class UserInfo extends Component {
     this.props.dispatch({
       type: 'check/getCheckList',
       payload: {
-        zhangchao: i,
+        state: i,
         limit: 3,
         page: 1
       },
@@ -79,19 +79,27 @@ export default class UserInfo extends Component {
           noData: !meta.pagination.total,
           noMore: dataNum == meta.pagination.total
         })
-        console.log('Tabs_state', this.state)
+        /* console.log('Tabs_state', this.state) */
         const {
           checkList: { list }
         } = this.props
-        console.log('Tabs_porps.checklist.list', list)
+        /* console.log('Tabs_porps_checklist_list', list) */
       }
     })
   }
   continueToDeposite = () => {
+    Taro.navigateTo({
+      url: '/pages/home/index'
+    })
+  }
+  refreshData = i => {
+    console.log('refresh')
+    console.log(i)
+
     this.props.dispatch({
       type: 'check/getCheckList',
       payload: {
-        zhangchao: 1,
+        state: i,
         limit: 3,
         page: 1
       },
@@ -167,7 +175,7 @@ export default class UserInfo extends Component {
     const sexArray = ['&#xe661;', '&#xe690;']
     const _afterThreeNoData = list.length && list.length < 1
     const _noData = noData || _afterThreeNoData
-    console.log('_noData有没有', _noData)
+    /* console.log('_noData有没有', _noData) */
     /* const awaitExpress = list.filter(item => {
       return item.state === 1
     })
@@ -189,6 +197,7 @@ export default class UserInfo extends Component {
           <ModalLogin
             isShow={this.state.showLogin}
             onCancel={this.cancel.bind(this)}
+            onRefreshData={this.refreshData.bind(this)}
           ></ModalLogin>
           {/* <AtFab
             onClick={this.onButtonClick.bind(this)}
@@ -210,13 +219,16 @@ export default class UserInfo extends Component {
             tabList={tabList}
             onClick={this.handleClick.bind(this)}
             swipeable
+            /* tabDirection='vertical' */
           >
             <AtTabsPane
-              tabDirection='vertical'
+              /* tabDirection='vertical' */
               current={this.state.current}
+              className='testHeight'
               index={0}
             >
-              <View>
+              <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
+                {/* 标签第一页 */}
                 {list.length &&
                   list.map(item => {
                     return (
@@ -256,15 +268,17 @@ export default class UserInfo extends Component {
                   noMore={noMore}
                   noDataText={_afterThreeNoData ? '我是有底线的哦！' : ''}
                 />
-              </View>
+              </ScrollView>
             </AtTabsPane>
+
             <AtTabsPane
-              tabDirection='vertical'
+              /* tabDirection='vertical' */
               current={this.state.current}
               index={1}
+              className='testHeight'
             >
-              <View>
-                标签页二
+              <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
+                标签第二页
                 {list.length &&
                   list.map(item => {
                     return (
@@ -304,15 +318,17 @@ export default class UserInfo extends Component {
                   noMore={noMore}
                   noDataText={_afterThreeNoData ? '我是有底线的哦！' : ''}
                 />
-              </View>
+              </ScrollView>
             </AtTabsPane>
+
             <AtTabsPane
-              tabDirection='vertical'
+              /* tabDirection='vertical' */
               current={this.state.current}
               index={2}
+              className='testHeight'
             >
-              <View className='everyState'>
-                标签页三
+              <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
+                标签第三页
                 {list.length &&
                   list.map(item => {
                     return (
@@ -352,15 +368,17 @@ export default class UserInfo extends Component {
                   noMore={noMore}
                   noDataText={_afterThreeNoData ? '我是有底线的哦！' : ''}
                 />
-              </View>
+              </ScrollView>
             </AtTabsPane>
+
             <AtTabsPane
-              tabDirection='vertical'
+              /* tabDirection='vertical' */
               current={this.state.current}
               index={3}
+              className='testHeight'
             >
-              <View>
-                标签页四
+              <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
+                标签第四页
                 {list.length &&
                   list.map(item => {
                     return (
@@ -400,7 +418,7 @@ export default class UserInfo extends Component {
                   noMore={noMore}
                   noDataText={_afterThreeNoData ? '我是有底线的哦！' : ''}
                 />
-              </View>
+              </ScrollView>
             </AtTabsPane>
           </AtTabs>
         </AtTabsPane>

@@ -28,7 +28,7 @@ export function loadList({
         },
     callback: res => {
       if (!res.code) {
-        console.log('loadList', res)
+        /* console.log('loadList', res) */
         /* console.log(res.data)
         console.log(res.meta.pagination) */
 

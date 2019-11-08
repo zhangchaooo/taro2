@@ -6,12 +6,6 @@ export const getCheckList = data =>
     method: 'GET',
     data
   })
-export const getCheckList2 = data =>
-  Request({
-    url: '/depositor/check-list',
-    method: 'GET',
-    data
-  })
 export const gettopInfo = data =>
   Request({
     url: '/depositor/show',

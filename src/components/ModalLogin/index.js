@@ -73,6 +73,7 @@ export default class ModalLogin extends Component {
                   url: '/pages/userInfoModel/index'
                 }) */
                 this.props.onCancel(1)
+                this.props.onRefreshData(1)
                 /* Request({
                   url: '/depositor/check-list',
                   method: 'GET'
