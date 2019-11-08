@@ -15,7 +15,7 @@ export default {
       let response = yield call(getCheckList, payload)
 
       /* if (zhangchao) response = response1 */
-      const responsetop = yield call(gettopInfo, payload)
+      /*   const responsetop = yield call(gettopInfo, payload) */
 
       /* console.log('toptop is=>', responsetop) */
       /* Taro.getUserInfo().then(res => {
@@ -23,15 +23,15 @@ export default {
         const avatarUrl = res.userInfo.avatarUrl
         console.log('aaa', avatarUrl)
       }) */
-      const name = responsetop.depositor_wechat_user.name
+      /* const name = responsetop.depositor_wechat_user.name
       const head_image = responsetop.depositor_wechat_user.head_image
       const id_card = responsetop.depositor_wechat_user.id_card
-      const sex = responsetop.depositor_wechat_user.sex
+      const sex = responsetop.depositor_wechat_user.sex */
       /* console.log('sex is => ', sex) */
 
       /* console.log('toptop', name, head_image, id_card) */
 
-      yield put({
+      /*   yield put({
         type: 'save',
         payload: {
           name,
@@ -39,7 +39,7 @@ export default {
           id_card,
           sex
         }
-      })
+      }) */
 
       if (response) {
         yield put({
@@ -48,8 +48,8 @@ export default {
             key: 'checkList',
             page: payload.page,
             state: payload.state,
-            response
-            /* state_type: payload.state_type */
+            response,
+            state_type: payload.state_type
           }
         })
       }
@@ -78,6 +78,7 @@ export default {
               : { ...response.data, list: [...list, ..._list] }
         }
       }
+      /*  return {} */
       return {
         ...state,
         [key]:

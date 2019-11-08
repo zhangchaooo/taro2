@@ -27,8 +27,8 @@ export function loadList({
           [isRows ? 'rows' : 'limit']: limit || 10
         },
     callback: res => {
-      if (!res.code) {
-        /* console.log('loadList', res) */
+      if (res.meta) {
+        console.log('loadL2ist', res)
         /* console.log(res.data)
         console.log(res.meta.pagination) */
 

@@ -58,12 +58,14 @@ export default class UserInfo extends Component {
     this.setState({
       current: value
     })
-    let i = value
+    let i = value + 1
+    console.log(i)
+
     this.props.dispatch({
       type: 'check/getCheckList',
       payload: {
         state: i,
-        limit: 3,
+        limit: 5,
         page: 1
       },
       callback: res => {
@@ -95,31 +97,12 @@ export default class UserInfo extends Component {
   refreshData = i => {
     console.log('refresh')
     console.log(i)
-
-    this.props.dispatch({
-      type: 'check/getCheckList',
-      payload: {
-        state: i,
-        limit: 3,
-        page: 1
-      },
-      callback: res => {
-        console.log('res', res)
-        const { data, meta } = res
-        const dataNum =
-          (meta.pagination.current_page - 1) * meta.pagination.per_page +
-          data.length
-        this.setState({
-          page: 1,
-          loading: false,
-          moreLoading: false,
-          noData: !meta.pagination.total,
-          noMore: dataNum == meta.pagination.total
-        })
-        /*  console.log('state', this.state) */
-        const { checkList } = this.props
-        /*  console.log('porps.checklist', checkList) */
-      }
+    this.setState({
+      page: 1,
+      loading: false,
+      moreLoading: false,
+      noData: !meta.pagination.total,
+      noMore: dataNum == meta.pagination.total
     })
     /* Taro.navigateTo({
       url: '/pages/home/index'
@@ -156,7 +139,7 @@ export default class UserInfo extends Component {
       avatarUrl,
       nickName
     } = this.state
-    const {
+    let {
       checkList: { list },
       name,
       head_image,
@@ -165,7 +148,8 @@ export default class UserInfo extends Component {
       sex,
       noDataText
     } = this.props
-    /* console.log(list) */
+    if (!list) list = []
+    console.log(list)
     const tabList = [
       { title: '全部' },
       { title: '待取件' },
@@ -278,7 +262,7 @@ export default class UserInfo extends Component {
               className='testHeight'
             >
               <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
-                标签第二页
+                {/* 标签第二页 */}
                 {list.length &&
                   list.map(item => {
                     return (
@@ -328,7 +312,7 @@ export default class UserInfo extends Component {
               className='testHeight'
             >
               <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
-                标签第三页
+                {/* 标签第三页 */}
                 {list.length &&
                   list.map(item => {
                     return (
@@ -378,7 +362,7 @@ export default class UserInfo extends Component {
               className='testHeight'
             >
               <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
-                标签第四页
+                {/* 标签第四页 */}
                 {list.length &&
                   list.map(item => {
                     return (
