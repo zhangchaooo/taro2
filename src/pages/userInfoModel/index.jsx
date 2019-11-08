@@ -55,50 +55,44 @@ export default class UserInfo extends Component {
   }
 
   handleClick(value) {
-    let i = value
-    this.setState({ loading: true })
-    const state_type =
-      i === 0
-        ? 'state_new'
-        : i === 1
-        ? 'state_pay'
-        : i === 2
-        ? 'state_send'
-        : i === 3
-        ? 'state_success'
-        : i === 4
-        ? 'state_cancle'
-        : ''
     this.setState({
-      current: i,
-      state_type
+      current: value
     })
+    let i = value
     this.props.dispatch({
       type: 'check/getCheckList',
-      payload:
-        i === 0 ? { page: 1, limit: 10 } : { page: 1, limit: 10, state_type },
+      payload: {
+        zhangchao: i,
+        limit: 3,
+        page: 1
+      },
       callback: res => {
-        if (res.code === 0) {
-          const { list, total, current_page, per_page } = res.data
-          const dataNum = (current_page - 1) * per_page + list.length
-          this.setState({
-            page: 1,
-            loading: false,
-            moreLoading: false,
-            noData: !total,
-            noMore: dataNum == total
-          })
-        }
+        console.log('Tabs_res', res)
+        const { data, meta } = res
+        const dataNum =
+          (meta.pagination.current_page - 1) * meta.pagination.per_page +
+          data.length
+        this.setState({
+          page: 1,
+          loading: false,
+          moreLoading: false,
+          noData: !meta.pagination.total,
+          noMore: dataNum == meta.pagination.total
+        })
+        console.log('Tabs_state', this.state)
+        const {
+          checkList: { list }
+        } = this.props
+        console.log('Tabs_porps.checklist.list', list)
       }
     })
   }
   continueToDeposite = () => {
-    console.log(222222)
     this.props.dispatch({
       type: 'check/getCheckList',
       payload: {
         zhangchao: 1,
-        limit: 5,
+        limit: 3,
         page: 1
       },
       callback: res => {
@@ -114,12 +108,11 @@ export default class UserInfo extends Component {
           noData: !meta.pagination.total,
           noMore: dataNum == meta.pagination.total
         })
-        console.log('state', this.state)
+        /*  console.log('state', this.state) */
         const { checkList } = this.props
-        console.log('porps.checklist', checkList)
+        /*  console.log('porps.checklist', checkList) */
       }
     })
-
     /* Taro.navigateTo({
       url: '/pages/home/index'
     }) */
@@ -164,7 +157,7 @@ export default class UserInfo extends Component {
       sex,
       noDataText
     } = this.props
-    console.log(list)
+    /* console.log(list) */
     const tabList = [
       { title: '全部' },
       { title: '待取件' },
@@ -172,10 +165,10 @@ export default class UserInfo extends Component {
       { title: '已逾期' }
     ]
     const sexArray = ['&#xe661;', '&#xe690;']
-    const _afterThreeNoData = list.length && list.length < 2
+    const _afterThreeNoData = list.length && list.length < 1
     const _noData = noData || _afterThreeNoData
-    /* console.log('没有', _noData) */
-    const awaitExpress = list.filter(item => {
+    console.log('_noData有没有', _noData)
+    /* const awaitExpress = list.filter(item => {
       return item.state === 1
     })
     const geted = list.filter(item => {
@@ -183,7 +176,7 @@ export default class UserInfo extends Component {
     })
     const overTime = list.filter(item => {
       return item.state === 3
-    })
+    }) */
 
     return (
       <View className='index'>
@@ -210,7 +203,7 @@ export default class UserInfo extends Component {
           />
           <View className='notlogin'>未登录</View>
         </View>
-        <View className='TabsWrap'>
+        <AtTabsPane className='TabsWrap'>
           <AtTabs
             animated
             current={this.state.current}
@@ -218,7 +211,11 @@ export default class UserInfo extends Component {
             onClick={this.handleClick.bind(this)}
             swipeable
           >
-            <AtTabsPane current={this.state.current} index={0}>
+            <AtTabsPane
+              tabDirection='vertical'
+              current={this.state.current}
+              index={0}
+            >
               <View>
                 {list.length &&
                   list.map(item => {
@@ -261,53 +258,15 @@ export default class UserInfo extends Component {
                 />
               </View>
             </AtTabsPane>
-            <AtTabsPane current={this.state.current} index={1}>
+            <AtTabsPane
+              tabDirection='vertical'
+              current={this.state.current}
+              index={1}
+            >
               <View>
-                {awaitExpress.length &&
-                  awaitExpress.map(item => {
-                    return (
-                      <View className='anyone-info-wrap' key={item.id}>
-                        <View className='tel-number-series item item1'>
-                          <View className='username-telephone-wrap'>
-                            <View className='username align'>
-                              {item.recipients_name}:
-                            </View>
-                            <View className='telephone align tel'>
-                              {item.recipients_mobile}
-                            </View>
-                          </View>
-                          <View className='durtime-wrap'>
-                            <View className='username align'>寄存时间：</View>
-                            <View className='telephone align'>
-                              {item.created_at}
-                            </View>
-                          </View>
-                          <View className='series-wrap'>
-                            <View className='username align'>寄存物品：</View>
-                            <View className='telephone align'>{item.name}</View>
-                          </View>
-                        </View>
-                        <View className='status-wrap item item2'>
-                          <View className='status align'>
-                            {this.state.projectState[item.state - 1]}
-                          </View>
-                        </View>
-                      </View>
-                    )
-                  })}
-                <Loading
-                  loading={loading}
-                  mLoading={mLoading}
-                  noData={_noData}
-                  noMore={noMore}
-                  noDataText={_afterThreeNoData ? '我是有底线的哦！' : ''}
-                />
-              </View>
-            </AtTabsPane>
-            <AtTabsPane current={this.state.current} index={2}>
-              <View className='getPaddings'>
-                {geted.length &&
-                  geted.map(item => {
+                标签页二
+                {list.length &&
+                  list.map(item => {
                     return (
                       <View className='anyone-info-wrap' key={item.id}>
                         <View className='tel-number-series item item1'>
@@ -348,13 +307,62 @@ export default class UserInfo extends Component {
               </View>
             </AtTabsPane>
             <AtTabsPane
-              className='getPaddings'
+              tabDirection='vertical'
+              current={this.state.current}
+              index={2}
+            >
+              <View className='everyState'>
+                标签页三
+                {list.length &&
+                  list.map(item => {
+                    return (
+                      <View className='anyone-info-wrap' key={item.id}>
+                        <View className='tel-number-series item item1'>
+                          <View className='username-telephone-wrap'>
+                            <View className='username align'>
+                              {item.recipients_name}:
+                            </View>
+                            <View className='telephone align tel'>
+                              {item.recipients_mobile}
+                            </View>
+                          </View>
+                          <View className='durtime-wrap'>
+                            <View className='username align'>寄存时间：</View>
+                            <View className='telephone align'>
+                              {item.created_at}
+                            </View>
+                          </View>
+                          <View className='series-wrap'>
+                            <View className='username align'>寄存物品：</View>
+                            <View className='telephone align'>{item.name}</View>
+                          </View>
+                        </View>
+                        <View className='status-wrap item item2'>
+                          <View className='status align'>
+                            {this.state.projectState[item.state - 1]}
+                          </View>
+                        </View>
+                      </View>
+                    )
+                  })}
+                <Loading
+                  loading={loading}
+                  mLoading={mLoading}
+                  noData={_noData}
+                  noMore={noMore}
+                  noDataText={_afterThreeNoData ? '我是有底线的哦！' : ''}
+                />
+              </View>
+            </AtTabsPane>
+            <AtTabsPane
+              tabDirection='vertical'
               current={this.state.current}
               index={3}
             >
               <View>
-                {overTime.length &&
-                  overTime.map(item => {
+                标签页四
+                {list.length &&
+                  list.map(item => {
                     return (
                       <View className='anyone-info-wrap' key={item.id}>
                         <View className='tel-number-series item item1'>
@@ -395,8 +403,45 @@ export default class UserInfo extends Component {
               </View>
             </AtTabsPane>
           </AtTabs>
-        </View>
+        </AtTabsPane>
       </View>
     )
   }
 }
+
+/* let i = value
+    this.setState({ loading: true })
+    const state_type =
+      i === 0
+        ? 'state_new'
+        : i === 1
+        ? 'state_pay'
+        : i === 2
+        ? 'state_send'
+        : i === 3
+        ? 'state_success'
+        : i === 4
+        ? 'state_cancle'
+        : ''
+    this.setState({
+      current: i,
+      state_type
+    })
+    this.props.dispatch({
+      type: 'check/getCheckList',
+      payload:
+        i === 0 ? { page: 1, limit: 10 } : { page: 1, limit: 10, state_type },
+      callback: res => {
+        if (res.code === 0) {
+          const { list, total, current_page, per_page } = res.data
+          const dataNum = (current_page - 1) * per_page + list.length
+          this.setState({
+            page: 1,
+            loading: false,
+            moreLoading: false,
+            noData: !total,
+            noMore: dataNum == total
+          })
+        }
+      }
+    }) */
