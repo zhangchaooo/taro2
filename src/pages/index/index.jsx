@@ -78,6 +78,8 @@ export default class Index extends Component {
   }
 
   userRegister = () => {
+    console.log('4.5注册');
+
     Request({
       url: `/depositor/update`,
       method: 'POST',
@@ -89,6 +91,10 @@ export default class Index extends Component {
         mobile: this.state.mobile,
         id_card: this.state.id_card,
         unit: this.state.unit
+      },
+      success:(res) => {
+        console.log('2注册',res);
+
       }
     })
     Taro.navigateTo({

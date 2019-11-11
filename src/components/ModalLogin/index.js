@@ -48,6 +48,8 @@ export default class ModalLogin extends Component {
           callback: res => {
             if (res) {
               const { nickName, avatarUrl } = userInfo || {}
+              console.log('avatarUrl', avatarUrl)
+
               Taro.setStorageSync('user_info', { nickName, avatarUrl })
               dispatch({
                 type: 'user/save',
@@ -60,6 +62,9 @@ export default class ModalLogin extends Component {
                 payload: {
                   limit: 5,
                   page: 1
+                },
+                success: () => {
+                  console.log('Modal_Login_success')
                 }
               })
 
@@ -73,7 +78,10 @@ export default class ModalLogin extends Component {
                   url: '/pages/userInfoModel/index'
                 }) */
                 this.props.onCancel(1)
-                this.props.onRefreshData(1)
+                this.props.onShowAddButton(avatarUrl, nickName)
+                this.props.onRefreshData()
+                if (this.props.list) return
+
                 /* Request({
                   url: '/depositor/check-list',
                   method: 'GET'

@@ -6,40 +6,26 @@ export default {
   state: {
     res: [1],
     checkList: { list: [] },
-    avatarUrl: ''
+    avatarUrl: '',
+    meta: {}
   },
 
   effects: {
     *getCheckList({ payload = {}, callback }, { call, put, select }) {
-      /* console.log('check_payload', payload) */
+      console.log('check_first_getlist_payload', payload) // { limit: 5, page: 1 }
+
       let response = yield call(getCheckList, payload)
-
-      /* if (zhangchao) response = response1 */
-      /*   const responsetop = yield call(gettopInfo, payload) */
-
-      /* console.log('toptop is=>', responsetop) */
-      /* Taro.getUserInfo().then(res => {
-        console.log('hahaha', res.userInfo.avatarUrl)
-        const avatarUrl = res.userInfo.avatarUrl
-        console.log('aaa', avatarUrl)
-      }) */
-      /* const name = responsetop.depositor_wechat_user.name
-      const head_image = responsetop.depositor_wechat_user.head_image
-      const id_card = responsetop.depositor_wechat_user.id_card
-      const sex = responsetop.depositor_wechat_user.sex */
-      /* console.log('sex is => ', sex) */
-
-      /* console.log('toptop', name, head_image, id_card) */
-
-      /*   yield put({
-        type: 'save',
-        payload: {
-          name,
-          head_image,
-          id_card,
-          sex
-        }
-      }) */
+      let { meta } = response
+      console.log('check_two_effets__getCheck_list_response_payload', payload) // { limit: 5, page: 1 }
+      console.log('check_first_request_response', response) // { data:[],meta:{pagination:{total:8}} }
+      if (meta) {
+        yield put({
+          type: 'savemeta',
+          payload: {
+            meta
+          }
+        })
+      }
 
       if (response) {
         yield put({
@@ -47,9 +33,9 @@ export default {
           payload: {
             key: 'checkList',
             page: payload.page,
-            state: payload.state,
-            response,
-            state_type: payload.state_type
+            /*  state: payload.state, */
+            response
+            /* state_type: payload.state_type */
           }
         })
       }
@@ -63,13 +49,37 @@ export default {
 
       return { ...state, ...payload }
     },
+    savemeta(state, { payload }) {
+      /* console.log('pei', payload) */
+
+      return { ...state, ...payload }
+    },
     saveList(state, { payload }) {
-      const { key, page, response } = payload
-      let _list = response.data
-      const { list } = state[key]
+      const { key, page, response } = payload // key: checkList
+      console.log('savelist_recieved_response', response)
+
+      let { data } = response // call 新请求的 list数组
+      let { meta } = response
+      console.log('savelist_recieved_response_data', data)
+      console.log('savelist_recieved_response_meta', meta)
+
+      let _list = data
+      console.log(
+        'savelist_recieved_response_data_list----------------------------------',
+        data
+      )
+      let { list } = state[key] //state里面的 list数组
+      console.log('response-------------------------------------', response)
+      console.log('list-------------------------------------', list)
+      console.log('_list----------------------------------', _list)
+      console.log('page----------------------------------', page)
+      console.log('key----------------------------------', key)
+      /* return */
 
       if (!_list) {
-        _list = response.data
+        // 新请求的数组不存在，没返回信息，  如果 page===1 : 返回空数组， page!==1 : 新的空数组 + state的list 数组
+        console.log('_list undefined 不存在---------------------------')
+
         return {
           ...state,
           [key]:
@@ -77,13 +87,16 @@ export default {
               ? { ...response.data, list: _list }
               : { ...response.data, list: [...list, ..._list] }
         }
-      }
-      /*  return {} */
-      return {
+      } //  请求并返回数据， checkList: page ===1 , list : 新的数据+ state 的 list
+      console.log('_list 存在，请求到了数据--------------')
+
+      /*  return {} */ return {
         ...state,
         [key]:
           page === 1
-            ? { list: [...list, ..._list] }
+            ? /* ? response.data
+            : { ...response.data, list: [...list, ..._list] } */
+              { list: [..._list] }
             : { list: [...list, ..._list] }
       }
     }
@@ -672,3 +685,30 @@ export default {
                 }
               }
             } */
+
+/* if (zhangchao) response = response1 */
+/*   const responsetop = yield call(gettopInfo, payload) */
+
+/* console.log('toptop is=>', responsetop) */
+/* Taro.getUserInfo().then(res => {
+        console.log('hahaha', res.userInfo.avatarUrl)
+        const avatarUrl = res.userInfo.avatarUrl
+        console.log('aaa', avatarUrl)
+      }) */
+/* const name = responsetop.depositor_wechat_user.name
+      const head_image = responsetop.depositor_wechat_user.head_image
+      const id_card = responsetop.depositor_wechat_user.id_card
+      const sex = responsetop.depositor_wechat_user.sex */
+/* console.log('sex is => ', sex) */
+
+/* console.log('toptop', name, head_image, id_card) */
+
+/*   yield put({
+        type: 'save',
+        payload: {
+          name,
+          head_image,
+          id_card,
+          sex
+        }
+      }) */

@@ -7,10 +7,10 @@ export default {
 
   effects: {
     *userRegister({ payload }, { call }) {
-      // console.log(2)
+      console.log(2)
       const res = yield call(userRegister, payload)
-      console.log(res)
-
+      console.log('userRegister',res)
+3
       /* if (res.code === 0) {
         Taro.setStorageSync('access_token', res.data.access_token)
       }

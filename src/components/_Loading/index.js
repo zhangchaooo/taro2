@@ -67,7 +67,7 @@ export default class Loading extends Component {
           mode='center'
         ></AtActivityIndicator>
       ) : (
-        '—— 没有更多 ——'
+        '—— 上拉显示更多 ——'
       )
 
     const sContainer =

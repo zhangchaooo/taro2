@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
+import { loadList } from '../../utils/loadList'
 import { View, Text, ScrollView } from '@tarojs/components'
 import {
   AtAvatar,
@@ -16,6 +17,7 @@ import withLoad from '../../utils/withLoad'
 import Loading from '../../components/_Loading'
 import ModalLogin from '../../components/ModalLogin/index.js'
 import notLogin from '../../images/component/e49b2415cf2e0914b924d9a27f2013e.png'
+import Request from '../../utils/request'
 
 import './index.scss'
 
@@ -27,9 +29,13 @@ import './index.scss'
   type: 'check/getCheckList',
   listProp: 'checkList',
   limit: 5
-  /* isScrollView: 1 */
+  /* total: 8 */
+  // isScrollView: 1
 })
 export default class UserInfo extends Component {
+  defaultProps = {
+    list: []
+  }
   config = {
     navigationBarTitleText: '寄存列表',
     onReachBottomDistance: 50
@@ -46,7 +52,10 @@ export default class UserInfo extends Component {
     noMore: '没有更多',
     noData: '没有数据',
     avatarUrl: '',
-    nickName: ''
+    nickName: '',
+    total: 8,
+    display_name: 'none',
+    display_text: 'block'
   }
   toPersonal = () => {
     Taro.navigateTo({
@@ -58,8 +67,9 @@ export default class UserInfo extends Component {
     this.setState({
       current: value
     })
-    let i = value + 1
+    let i = value
     console.log(i)
+    if (i === 0) return
 
     this.props.dispatch({
       type: 'check/getCheckList',
@@ -90,13 +100,62 @@ export default class UserInfo extends Component {
     })
   }
   continueToDeposite = () => {
-    Taro.navigateTo({
-      url: '/pages/home/index'
+    Request({
+      url: '/depositor/show',
+      method: 'GET'
+    }).then(res => {
+      /* console.log(res.depositor_wechat_user) */
+      if (
+        res.depositor_wechat_user.id_card &&
+        res.depositor_wechat_user.mobile &&
+        res.depositor_wechat_user.name &&
+        res.depositor_wechat_user.id_card &&
+        res.depositor_wechat_user.unit
+      ) {
+        console.log('存在')
+        Taro.navigateTo({
+          url: '/pages/home/index'
+        })
+      } else {
+        Taro.navigateTo({
+          url: '/pages/index/index'
+        })
+      }
     })
+    /* Taro.navigateTo({
+      url: '/pages/home/index'
+    }) */
   }
-  refreshData = i => {
+  refreshData = () => {
     console.log('refresh')
-    console.log(i)
+    /* loadList({
+      this: this,
+      ['limit']: 5,
+      page: page + 1
+    }) */
+    /* this.setState({
+      current: 0
+    }) */
+    /* this.props.dispatch({
+      type: 'check/getCheckList',
+      payload: i === 0 ? { page: 1, limit: 5 } : { page: 1, limit: 5 },
+      callback: res => {
+        if (res.code === 0) {
+          const { list, total, current_page, per_page } = res.data
+          const dataNum = (current_page - 1) * per_page + list.length
+          this.setState({
+            page: 1,
+            loading: false,
+            moreLoading: false,
+            noData: !total,
+            noMore: dataNum == total
+          })
+        }
+      }
+    })
+    */
+    console.log(this.props)
+
     this.setState({
       page: 1,
       loading: false,
@@ -107,6 +166,15 @@ export default class UserInfo extends Component {
     /* Taro.navigateTo({
       url: '/pages/home/index'
     }) */
+  }
+  showAddButton = (avatarUrl, nickName) => {
+    console.log('show_add_button')
+    this.setState({
+      display_name: 'block',
+      display_text: 'none',
+      avatarUrl,
+      nickName
+    })
   }
 
   onButtonClick = () => {
@@ -119,6 +187,15 @@ export default class UserInfo extends Component {
   }
   componentDidMount() {
     /*  console.log('state', this.state) */
+    Taro.getStorageInfo({
+      success: res => {
+        // console.log('keys',res.keys[0]);
+        if (res.keys[0] === 'access_token') {
+          this.showAddButton && this.showAddButton()
+        }
+      }
+    })
+
     Taro.getUserInfo({
       success: res => {
         /* console.log('res', res.userInfo.nickName) */
@@ -149,7 +226,11 @@ export default class UserInfo extends Component {
       noDataText
     } = this.props
     if (!list) list = []
-    console.log(list)
+    console.log(
+      '组件的list',
+      list,
+      '---------------------------------------------------------------------------------'
+    )
     const tabList = [
       { title: '全部' },
       { title: '待取件' },
@@ -175,6 +256,7 @@ export default class UserInfo extends Component {
         <View
           onClick={this.continueToDeposite.bind(this)}
           className='at-icon at-icon-add add '
+          style={{ padding: '5px', display: this.state.display_name }}
         ></View>
         <View className='top'>
           {/* <AtAvatar circle image={head_image} className='image'></AtAvatar> */}
@@ -182,6 +264,8 @@ export default class UserInfo extends Component {
             isShow={this.state.showLogin}
             onCancel={this.cancel.bind(this)}
             onRefreshData={this.refreshData.bind(this)}
+            onShowAddButton={this.showAddButton.bind(this)}
+            List={this.props.list}
           ></ModalLogin>
           {/* <AtFab
             onClick={this.onButtonClick.bind(this)}
@@ -189,12 +273,21 @@ export default class UserInfo extends Component {
           >
             去登录
           </AtFab> */}
-          <Image
-            onClick={this.onButtonClick.bind(this)}
-            style='width: 60px; height: 60px;'
-            src={notLogin}
-          />
-          <View className='notlogin'>未登录</View>
+          <AtBadge value={this.state.nickName}>
+            <View onClick={this.onButtonClick.bind(this)}>
+              <AtAvatar
+                circle
+                size='large'
+                image={this.state.avatarUrl ? this.state.avatarUrl : notLogin}
+              />
+            </View>
+          </AtBadge>
+          <View
+            style={{ display: this.state.display_text }}
+            className='notlogin'
+          >
+            未登录
+          </View>
         </View>
         <AtTabsPane className='TabsWrap'>
           <AtTabs
@@ -211,7 +304,7 @@ export default class UserInfo extends Component {
               className='testHeight'
               index={0}
             >
-              <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
+              <View style='height: 100%;' scrollY className='fixedHeight'>
                 {/* 标签第一页 */}
                 {list.length &&
                   list.map(item => {
@@ -252,7 +345,7 @@ export default class UserInfo extends Component {
                   noMore={noMore}
                   noDataText={_afterThreeNoData ? '我是有底线的哦！' : ''}
                 />
-              </ScrollView>
+              </View>
             </AtTabsPane>
 
             <AtTabsPane
@@ -261,7 +354,7 @@ export default class UserInfo extends Component {
               index={1}
               className='testHeight'
             >
-              <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
+              <View style='height: 100%;' scrollY className='fixedHeight'>
                 {/* 标签第二页 */}
                 {list.length &&
                   list.map(item => {
@@ -302,7 +395,7 @@ export default class UserInfo extends Component {
                   noMore={noMore}
                   noDataText={_afterThreeNoData ? '我是有底线的哦！' : ''}
                 />
-              </ScrollView>
+              </View>
             </AtTabsPane>
 
             <AtTabsPane
@@ -311,7 +404,7 @@ export default class UserInfo extends Component {
               index={2}
               className='testHeight'
             >
-              <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
+              <View style='height: 100%;' scrollY className='fixedHeight'>
                 {/* 标签第三页 */}
                 {list.length &&
                   list.map(item => {
@@ -352,7 +445,7 @@ export default class UserInfo extends Component {
                   noMore={noMore}
                   noDataText={_afterThreeNoData ? '我是有底线的哦！' : ''}
                 />
-              </ScrollView>
+              </View>
             </AtTabsPane>
 
             <AtTabsPane
@@ -361,7 +454,7 @@ export default class UserInfo extends Component {
               index={3}
               className='testHeight'
             >
-              <ScrollView style='height: 100%;' scrollY className='fixedHeight'>
+              <View style='height: 100%;' scrollY className='fixedHeight'>
                 {/* 标签第四页 */}
                 {list.length &&
                   list.map(item => {
@@ -402,7 +495,7 @@ export default class UserInfo extends Component {
                   noMore={noMore}
                   noDataText={_afterThreeNoData ? '我是有底线的哦！' : ''}
                 />
-              </ScrollView>
+              </View>
             </AtTabsPane>
           </AtTabs>
         </AtTabsPane>

@@ -3,9 +3,9 @@
   flex-direction: column;
   align-items: center;
   background: #fff;
-  .at-card {
-    margin: 24px;
-  }
+  // .at-card {
+  //   margin: 24px;
+  // }
   .top {
     display: flex;
     flex-direction: column;
@@ -69,18 +69,18 @@
   }
   .TabsWrap {
     width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    .fixedHeight {
-      height: 500px;
-    }
-    .at-tabs-pane--active {
-      height: 100%;
-    }
-    .at-tabs__body {
-      height: 854px;
-    }
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-around;
+    // .fixedHeight {
+    //   height: 500px;
+    // }
+    // .at-tabs-pane--active {
+    //   height: 100%;
+    // }
+    // .at-tabs__body {
+    //   height: 200%;
+    // }
     .anyone-info-wrap {
       background: rgba(247, 247, 247, 0.8);
       margin: 30px auto;
