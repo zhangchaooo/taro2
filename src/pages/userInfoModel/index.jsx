@@ -47,7 +47,10 @@ export default class UserInfo extends Component {
     display_text: 'block'
   }
 
-  handleClick(value) {
+  handleClick (value) {
+    console.log('state777777777777777777777777777777777777777777777777777777777777777777777777777', this.props)
+    let { stateCode } = this.props
+    console.log('state777777777777777777777777777777777777777777777777777777777777777777777777777', stateCode)
     this.setState({
       current: value
     })
@@ -98,22 +101,23 @@ export default class UserInfo extends Component {
         res.depositor_wechat_user.unit
       ) {
         console.log('存在')
-        Taro.navigateTo({
+        Taro.redirectTo({
           url: '/pages/home/index'
         })
       } else {
-        Taro.navigateTo({
+        Taro.redirectTo({
           url: '/pages/index/index'
         })
       }
     })
   }
   refreshData = () => {
+
     console.log('refresh')
 
     this.props.dispatch({
       type: 'check/getCheckList',
-      payload: { page: 1, limit: 5 },
+      payload: { limit: 5, page: 1 },
       callback: res => {
         if (res) {
           /* console.log('????????????????????????????????????????????????????????????????????');
@@ -176,8 +180,9 @@ export default class UserInfo extends Component {
   cancel = () => {
     this.setState({ showLogin: false })
   }
-  componentDidMount() {
+  componentDidMount () {
     /*  console.log('state', this.state) */
+
     Taro.getStorageInfo({
       success: res => {
         // console.log('keys',res.keys[0]);
@@ -198,7 +203,7 @@ export default class UserInfo extends Component {
     })
   }
 
-  render() {
+  render () {
     const {
       loading,
       mLoading,
@@ -291,7 +296,7 @@ export default class UserInfo extends Component {
             tabList={tabList}
             onClick={this.handleClick.bind(this)}
             swipeable
-            /* tabDirection='vertical' */
+          /* tabDirection='vertical' */
           >
             <AtTabsPane
               /* tabDirection='vertical' */

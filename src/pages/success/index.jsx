@@ -30,7 +30,7 @@ export default class Success extends Component {
           继续存件
         </AtButton>
         <AtButton
-          onClick={this.toUserInfo.bind(this)}
+          onClick={this.toUserInfoModel.bind(this)}
           className='btn-max-w white-color'
           type='primary'
         >
@@ -42,14 +42,14 @@ export default class Success extends Component {
   }
 
   toHome() {
-    Taro.navigateTo({
+    Taro.redirectTo({
       url: '/pages/home/index'
     })
   }
 
-  toUserInfo() {
-    Taro.navigateTo({
-      url: '/pages/userInfo/index'
+  toUserInfoModel() {
+    Taro.redirectTo({
+      url: '/pages/userInfoModel/index'
     })
   }
 }

@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 
-export function loadList({
+export function loadList ({
   _this,
   type,
   page,
@@ -8,7 +8,8 @@ export function loadList({
   keyVal,
   cb,
   limit,
-  isRows
+  isRows,
+  state
 } = {}) {
   const { dispatch } = _this.props
   console.log('keyVal-------------------', keyVal) // null
@@ -25,16 +26,18 @@ export function loadList({
     type,
     payload: keyVal
       ? {
-          page: page || 1,
-          // sort: { id: 'desc' },
-          [isRows ? 'rows' : 'limit']: limit || 5
-          /* [key]: keyVal */
-        }
+        page: page || 1,
+        // sort: { id: 'desc' },
+        [isRows ? 'rows' : 'limit']: limit || 5,
+        state: state || '',
+        /* [key]: keyVal */
+      }
       : {
-          page: page || 1,
-          // sort: { id: 'desc' },
-          [isRows ? 'rows' : 'limit']: limit || 5
-        },
+        page: page || 1,
+        // sort: { id: 'desc' },
+        [isRows ? 'rows' : 'limit']: limit || 5,
+        state: state || '',
+      },
     callback: res => {
       console.log('loadList_callback_res~~~~~~~~~~~~~~~~~~~~~~~', res)
 

@@ -41,6 +41,27 @@
       }
     }
   }
+  .buttonView {
+    width: 90%;
+  }
+  .btn-max-w {
+    margin-top: 30px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    align-items: center;
+  }
+  .btn-max-y {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #ffab0a;
+    /*  height: 60px;
+    line-height: 60px; */
+    border: none;
+    text-align: center;
+    justify-content: center;
+    /* font-weight: bold; */
+  }
 }
 .index {
   height: 100vh;
@@ -52,26 +73,33 @@
     line-height: 80px;
     text-align: center;
     margin-top: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
   }
   .formWrap {
     display: flex;
     .at-form {
-      padding-bottom: 20px;
+      padding-bottom: 17px;
+      padding-top: 10px;
     }
-    .picker {
-      display: flex;
-      font-size: 35px;
-      padding-left: 28px;
-      .txt {
-        margin-right: 140px;
+    .page-section {
+      position: relative;
+      picker {
+        display: flex;
+        font-size: 35px;
+        padding-left: 67px;
+        padding-bottom: 20px;
+        margin-top: 39px;
+        /*  background: pink; */
+        border-bottom: 1px solid #eaeaea;
+        .txt {
+          margin-right: 140px;
+        }
       }
     }
     .input {
-      width: 600px;
-      height: 80px;
+      /* width: 600px;
+      height: 80px; */
       line-height: 80px;
-      margin-top: 50px;
       padding-left: 38px;
       text-align: center;
       flex-wrap: nowrap;
@@ -93,23 +121,6 @@
           height: 80px;
         }
       }
-    }
-    .btn-max-w {
-      margin-top: 50px;
-      border: none;
-      text-align: center;
-      align-items: center;
-    }
-    .btn-max-y {
-      margin-top: 50px;
-      margin-bottom: 30px;
-      background-color: #ffab0a;
-      /*  height: 60px;
-      line-height: 60px; */
-      border: none;
-      text-align: center;
-      justify-content: center;
-      font-weight: bold;
     }
   }
 }

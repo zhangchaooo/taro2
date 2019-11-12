@@ -1,7 +1,7 @@
-import Taro from '@tarojs/taro'
-import { loadList } from './loadList'
+import Taro from "@tarojs/taro";
+import { loadList } from "./loadList";
 
-function withLoad(opts = {}) {
+function withLoad (opts = {}) {
   // 设置默认
   // const defalutPath = 'pages/index/index?';
   let {
@@ -14,10 +14,10 @@ function withLoad(opts = {}) {
     isScrollView,
     total,
     cb
-  } = opts
+  } = opts;
   /*  let keyVal = null */
 
-  return function demoComponent(Component) {
+  return function demoComponent (Component) {
     // @connect(({ user }) => ({
     // }))
     class WithLoad extends Component {
@@ -29,17 +29,17 @@ function withLoad(opts = {}) {
         mLoading: false,
         /* state: 1, */
         ...this.state,
-        total: 10,
+        total: 20,
         cb
-      }
+      };
 
-      componentDidMount() {
+      componentDidMount () {
         // 获取 参数 （优先级最高）
-        if (this.$setPayloadKey && typeof this.$setPayloadKey === 'function') {
-          keyVal = this.$setPayloadKey()
+        if (this.$setPayloadKey && typeof this.$setPayloadKey === "function") {
+          keyVal = this.$setPayloadKey();
         }
         // if (this.$setPayloadType &&  typeof this.$setPayloadType === 'function') {
-        //   type = this.$setPayloadType();
+        //   type = this.$setPayloadType()
         // }
         // 请求数据
         // if(type_d) {
@@ -50,109 +50,118 @@ function withLoad(opts = {}) {
         loadList({
           _this: this,
           type,
-          [isRows ? 'rows' : 'limit']: limit,
+          [isRows ? "rows" : "limit"]: limit,
           /* key, */
           /* keyVal, */
           /* state: 1, */
           cb: res => {
             console.log(
-              'withLoad_start_res_loadlist.....................................',
+              "withLoad_start_res_loadlist.....................................",
               res
-            )
+            );
             let {
               meta: {
                 pagination: { total }
               }
-            } = res
+            } = res;
             console.log(
-              'withLoad_loadlist_callback.........................................total',
+              "withLoad_loadlist_callback.........................................total",
               total
-            )
+            );
 
             this.setState({
               total: total
-            })
+            });
           }
-        })
+        });
         if (super.componentDidMount) {
-          super.componentDidMount()
+          super.componentDidMount();
         }
       }
 
-      reachBottom() {
-        console.log('reach_bottom')
-        console.log('this.props', this.props)
-        if (this.$setPayloadKey && typeof this.$setPayloadKey === 'function') {
-          keyVal = this.$setPayloadKey()
+      reachBottom () {
+        console.log("reach_bottom");
+        console.log("this.props", this.props);
+        if (this.$setPayloadKey && typeof this.$setPayloadKey === "function") {
+          keyVal = this.$setPayloadKey();
         }
-        let { list } = this.props[listProp]
-        let { total } = this.state
+        let { list } = this.props[listProp];
+        let { total } = this.state;
 
         console.log(
-          'reachBottom_total*****************************total',
+          "reachBottom_total*****************************total",
           total
-        )
+        );
+        console.log(
+          "reachBottom_list.length*****************************list.length",
+          list.length
+        );
+        console.log(
+          "reachBottom_ this.props888888888888888888888888888888888888888888888888888888 this.props",
+          this.props
+        );
 
-        if (!list) return
-        if (list.length >= total) {
-          return
-        } else {
-          this.setState({ mLoading: true })
-          let { page } = this.state
-          loadList({
-            _this: this,
-            type,
-            [isRows ? 'rows' : 'limit']: limit,
-            /* key,
+        if (!list) return;
+        if (list.length >= total) return;
+        this.setState({ mLoading: true });
+        let { page } = this.state;
+        console.log(
+          "reachBottom_page*****************************page",
+          page
+        );
+        loadList({
+          _this: this,
+          type,
+          [isRows ? "rows" : "limit"]: limit,
+          /* key,
           keyVal, */
-            page: page + 1,
-            state: 1
-            /* cb: res => {
+          page: page + 1,
+          /* state: 1 */
+          cb: res => {
             console.log('cb_withLoad res is =>', res)
             this.setState({ page: page + 1 })
-          } */
-          })
-        }
+          }
+        });
       }
 
-      onReachBottom() {
-        console.log('onReachBottom')
+      onReachBottom () {
+        console.log("onReachBottom");
 
-        if (isScrollView) return
-        this.reachBottom()
+        if (isScrollView) return;
+        this.reachBottom();
       }
 
-      onScrollToLower() {
-        if (isScrollView) this.reachBottom()
+      onScrollToLower () {
+        if (isScrollView) this.reachBottom();
       }
 
-      onPullDownRefresh() {
-        if (this.$setPayloadKey && typeof this.$setPayloadKey === 'function') {
-          keyVal = this.$setPayloadKey()
+      onPullDownRefresh () {
+        if (this.$setPayloadKey && typeof this.$setPayloadKey === "function") {
+          keyVal = this.$setPayloadKey();
         }
 
         loadList({
           _this: this,
           type,
-          [isRows ? 'rows' : 'limit']: limit,
+          [isRows ? "rows" : "limit"]: limit,
           key,
           keyVal,
           cb: res => {
-            console.log('onPullDownRefresh', res)
+            console.log("onPullDownRefresh", res);
 
-            Taro.stopPullDownRefresh()
-            this.setState({ page: 1, noMore: false })
+            Taro.stopPullDownRefresh();
+            this.setState({ page: 1, noMore: false });
           }
-        })
+        });
       }
 
-      render() {
-        return super.render()
+      render () {
+        return super.render();
       }
     }
 
-    return WithLoad
-  }
+    return WithLoad;
+  };
 }
 
-export default withLoad
+export default withLoad;

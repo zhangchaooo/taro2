@@ -4,19 +4,24 @@ import { getCheckList, gettopInfo, getCheckList2 } from '../_service/check'
 export default {
   namespace: 'check',
   state: {
+    stateCode: 1,
     res: [1],
     checkList: { list: [] },
     avatarUrl: '',
     meta: {
       pagination: {
-        total: 10
+        total: 1000
       }
-    }
+    },
+
   },
 
   effects: {
-    *getCheckList({ payload = {}, callback }, { call, put, select }) {
+    *getCheckList ({ payload = {}, callback }, { call, put, select }) {
       console.log('check_first_getlist_payload', payload) // { limit: 5, page: 1 }
+      const { state } = payload
+      console.log('state^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', state);
+      let stateCode = state
 
       let response = yield call(getCheckList, payload)
       let { meta } = response
@@ -26,7 +31,8 @@ export default {
         yield put({
           type: 'savemeta',
           payload: {
-            meta
+            meta,
+            state
           }
         })
       }
@@ -38,7 +44,8 @@ export default {
             key: 'checkList',
             page: payload.page,
             /*  state: payload.state, */
-            response
+            response,
+            stateCode
             /* state_type: payload.state_type */
           }
         })
@@ -48,19 +55,22 @@ export default {
   },
 
   reducers: {
-    save(state, { payload }) {
+    save (state, { payload }) {
       /* console.log('pei', payload) */
 
       return { ...state, ...payload }
     },
-    savemeta(state, { payload }) {
+    savemeta (state, { payload }) {
       /* console.log('pei', payload) */
 
       return { ...state, ...payload }
     },
-    saveList(state, { payload }) {
-      const { key, page, response } = payload // key: checkList
+    saveList (state, { payload }) {
+      let { key, page, response, stateCode } = payload // key: checkList
       console.log('savelist_recieved_response', response)
+
+
+
 
       let { data } = response // call 新请求的 list数组
       let { meta } = response
@@ -98,7 +108,7 @@ export default {
         )
         return {
           ...state,
-          [key]: page === 1 ? { list: [...list] } : { list: [..._list] }
+          [key]: page === 1 ? { list: [...list] } : { list: [..._list] }, stateCode
         }
       }
       //  请求并返回数据， checkList: page ===1 , list : 新的数据+ state 的 list
@@ -108,10 +118,9 @@ export default {
         ...state,
         [key]:
           page === 1
-            ? /* ? response.data
-            : { ...response.data, list: [...list, ..._list] } */
-              { list: [..._list] }
-            : { list: [...list, ..._list] }
+            ?
+            { list: [..._list] }
+            : { list: [...list, ..._list] }, stateCode
       }
     }
   }

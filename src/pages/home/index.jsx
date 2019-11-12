@@ -3,7 +3,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
 import { View, Text, Picker } from '@tarojs/components'
-import { AtButton, AtForm, AtInput } from 'taro-ui'
+import { AtButton, AtForm, AtInput, AtToast } from 'taro-ui'
 import './index.scss'
 
 import Request from '../../utils/request'
@@ -33,21 +33,68 @@ export default class Home extends Component {
   constructor() {}
 
   confirmDeposit = () => {
+    if (!this.state.recipients_name) {
+      Taro.showToast({
+        title: '姓名不能为空',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
     /*  console.log('confirm deposite') */
-    Request({
-      url: `/depositor/check-in`,
-      method: 'POST',
-      data: {
-        community_id: this.state.community_id_selected,
-        recipients_name: this.state.recipients_name,
-        recipients_mobile: this.state.recipients_mobile,
-        name: Number(this.state.index + 1),
-        remark: this.state.remark
-      }
-    })
-    Taro.navigateTo({
-      url: '/pages/success/index'
-    })
+    console.log(typeof Number(this.state.recipients_mobile))
+
+    if (isNaN(this.state.recipients_mobile)) {
+      Taro.showToast({
+        title: '手机号码必须是11位的数字',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (!this.state.recipients_mobile) {
+      console.log('手机号码不能为空')
+
+      Taro.showToast({
+        title: '手机号码必须是11位的数字',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (this.state.recipients_mobile.length !== 11) {
+      Taro.showToast({
+        title: '手机号码应为11位',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+
+    if (
+      this.state.recipients_mobile &&
+      this.state.recipients_name &&
+      this.state.recipients_mobile.length === 11
+    ) {
+      console.log('success')
+
+      Request({
+        url: `/depositor/check-in`,
+        method: 'POST',
+        data: {
+          community_id: this.state.community_id_selected,
+          recipients_name: this.state.recipients_name,
+          recipients_mobile: this.state.recipients_mobile,
+          name: Number(this.state.index + 1),
+          remark: this.state.remark
+        }
+      })
+      Taro.redirectTo({
+        url: '/pages/success/index'
+      })
+    } else {
+      console.log('cuowuxinxi')
+    }
   }
   getrecipients_name = event => {
     this.setState({
@@ -99,8 +146,8 @@ export default class Home extends Component {
   }
 
   toUserInfoPage = () => {
-    Taro.navigateTo({
-      url: '/pages/userInfo/index'
+    Taro.redirectTo({
+      url: '/pages/userInfoModel/index'
     })
   }
 
@@ -194,21 +241,27 @@ export default class Home extends Component {
               placeholder='请输入寄件描述'
               onChange={this.get_all_info}
             />
-            <AtButton
-              onClick={this.confirmDeposit}
-              className='btn-max-w'
-              type='primary'
-            >
-              确认
-            </AtButton>
-            <AtButton
-              className='btn-max-y'
-              type='primary'
-              onClick={this.toUserInfoPage.bind(this)}
-            >
-              寄存查询
-            </AtButton>
           </AtForm>
+        </View>
+        <View className='buttonView'>
+          <AtButton
+            onClick={this.confirmDeposit}
+            className='btn-max-w'
+            type='primary'
+            size='normal'
+          >
+            确认
+          </AtButton>
+        </View>
+        <View className='buttonView'>
+          <AtButton
+            className='btn-max-y'
+            type='primary'
+            size='normal'
+            onClick={this.toUserInfoPage.bind(this)}
+          >
+            寄存查询
+          </AtButton>
         </View>
       </View>
     )
