@@ -1,18 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
-import { loadList } from '../../utils/loadList'
-import { View, Text, ScrollView } from '@tarojs/components'
-import {
-  AtAvatar,
-  AtTabs,
-  AtTabsPane,
-  AtFab,
-  AtModal,
-  AtModalHeader,
-  AtModalContent,
-  AtModalAction,
-  AtBadge
-} from 'taro-ui'
+import { View } from '@tarojs/components'
+import { AtAvatar, AtTabs, AtTabsPane, AtBadge } from 'taro-ui'
 import withLoad from '../../utils/withLoad'
 import Loading from '../../components/_Loading'
 import ModalLogin from '../../components/ModalLogin/index.js'
@@ -57,11 +46,6 @@ export default class UserInfo extends Component {
     display_name: 'none',
     display_text: 'block'
   }
-  toPersonal = () => {
-    Taro.navigateTo({
-      url: '/pages/personal/index'
-    })
-  }
 
   handleClick(value) {
     this.setState({
@@ -69,12 +53,13 @@ export default class UserInfo extends Component {
     })
     let i = value
     console.log(i)
-    if (i === 0) return
+
+    const state = i === 0 ? '' : i === 1 ? 1 : i === 2 ? 2 : i === 3 ? 3 : ''
 
     this.props.dispatch({
       type: 'check/getCheckList',
       payload: {
-        state: i,
+        state,
         limit: 5,
         page: 1
       },
@@ -122,26 +107,23 @@ export default class UserInfo extends Component {
         })
       }
     })
-    /* Taro.navigateTo({
-      url: '/pages/home/index'
-    }) */
   }
   refreshData = () => {
     console.log('refresh')
-    /* loadList({
-      this: this,
-      ['limit']: 5,
-      page: page + 1
-    }) */
-    /* this.setState({
-      current: 0
-    }) */
-    /* this.props.dispatch({
+
+    this.props.dispatch({
       type: 'check/getCheckList',
-      payload: i === 0 ? { page: 1, limit: 5 } : { page: 1, limit: 5 },
+      payload: { page: 1, limit: 5 },
       callback: res => {
-        if (res.code === 0) {
-          const { list, total, current_page, per_page } = res.data
+        if (res) {
+          /* console.log('????????????????????????????????????????????????????????????????????');
+
+        console.log(res.meta); */
+          const list = res.data
+          const total = res.meta.pagination.total
+          const current_page = res.meta.pagination.current_page
+          const per_page = res.meta.pagination.per_page
+
           const dataNum = (current_page - 1) * per_page + list.length
           this.setState({
             page: 1,
@@ -153,16 +135,25 @@ export default class UserInfo extends Component {
         }
       }
     })
-    */
-    console.log(this.props)
 
-    this.setState({
-      page: 1,
-      loading: false,
-      moreLoading: false,
-      noData: !meta.pagination.total,
-      noMore: dataNum == meta.pagination.total
-    })
+    // let {
+    //   checkList: { list },
+    //   meta:{
+    //     pagination: {total}
+    //   }
+    // } = this.props
+
+    // let { meta } = this.props
+    // console.log(this.props.checkList,'????????????????????????????????????????????????????')
+    // console.log(meta,'????????????????????????????????????????????????????')
+
+    // this.setState({
+    //   page: 1,
+    //   loading: false,
+    //   moreLoading: false,
+    //   noData: !total,
+    //   noMore: dataNum == total
+    // })
     /* Taro.navigateTo({
       url: '/pages/home/index'
     }) */
@@ -273,7 +264,11 @@ export default class UserInfo extends Component {
           >
             去登录
           </AtFab> */}
-          <AtBadge value={this.state.nickName}>
+          <AtBadge
+            size='large'
+            className='top_atbrage'
+            value={this.state.nickName}
+          >
             <View onClick={this.onButtonClick.bind(this)}>
               <AtAvatar
                 circle

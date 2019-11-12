@@ -7,7 +7,11 @@ export default {
     res: [1],
     checkList: { list: [] },
     avatarUrl: '',
-    meta: {}
+    meta: {
+      pagination: {
+        total: 10
+      }
+    }
   },
 
   effects: {
@@ -87,7 +91,17 @@ export default {
               ? { ...response.data, list: _list }
               : { ...response.data, list: [...list, ..._list] }
         }
-      } //  请求并返回数据， checkList: page ===1 , list : 新的数据+ state 的 list
+      }
+      if (_list.length === 0) {
+        console.log(
+          '_list.length ===00000000000000000000000000000000000000000000000000000000'
+        )
+        return {
+          ...state,
+          [key]: page === 1 ? { list: [...list] } : { list: [..._list] }
+        }
+      }
+      //  请求并返回数据， checkList: page ===1 , list : 新的数据+ state 的 list
       console.log('_list 存在，请求到了数据--------------')
 
       /*  return {} */ return {
