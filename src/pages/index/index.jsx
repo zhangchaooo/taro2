@@ -249,15 +249,17 @@ export default class Index extends Component {
               value={this.state.unit}
               onChange={this.getUnit}
             />
-            <AtButton
+            {/* <AtButton onClick={this.toHome} className='btna' type='primary'>ToHome</AtButton> */}
+          </AtForm>
+        </View>
+        <View className='buttonView'>
+        <AtButton
               onClick={this.userRegister}
               className='btn-max-w'
               type='primary'
             >
               登录/注册
-            </AtButton>
-            {/* <AtButton onClick={this.toHome} className='btna' type='primary'>ToHome</AtButton> */}
-          </AtForm>
+        </AtButton>
         </View>
       </View>
     )

@@ -209,6 +209,16 @@ export default class Home extends Component {
                 onChange={this.getrecipients_mobile.bind(this)}
               />
             </View>
+            <View>
+              <AtInput
+                className='input'
+                type='number'
+                title='备注:'
+                placeholder='请输入寄件描述'
+                value={this.state.recipients_mobile}
+                onChange={this.getrecipients_mobile.bind(this)}
+              />
+            </View>
             <View className='page-section'>
               <Picker
                 className='input'
@@ -235,12 +245,7 @@ export default class Home extends Component {
                 </View>
               </Picker>
             </View>
-            <AtInput
-              className='input'
-              title='备注:'
-              placeholder='请输入寄件描述'
-              onChange={this.get_all_info}
-            />
+
           </AtForm>
         </View>
         <View className='buttonView'>
