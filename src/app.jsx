@@ -23,6 +23,7 @@ class App extends Component {
     pages: [
       'pages/expressHouse/index',
       'pages/deposite/index',
+      'pages/editRecipient/index',
       'pages/userInfoModel/index',
       'pages/personal/index',
       'pages/index/index',
