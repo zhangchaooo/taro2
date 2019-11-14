@@ -10,13 +10,13 @@ import authReLaunch from '../../utils/index'
 import Request from '../../utils/request'
 import ListView, { LazyBlock } from 'taro-listview'
 
-@connect(({}) => ({}))
+@connect(({ }) => ({}))
 export default class ModalLogin extends Component {
   static defaultProps = {
     isShow: false
   }
 
-  getUserInfo(e) {
+  getUserInfo (e) {
     const _this = this
     const { dispatch } = this.props
 
@@ -32,11 +32,13 @@ export default class ModalLogin extends Component {
           'data is =>',
           encryptedData
         ) */
-        /* console.log('code is =>', res.code)
-        console.log(userInfo)
-        console.log('data is =>', encryptedData) */
+        console.log('res is =>', res)
+        console.log('code is =>', res.code)
+        console.log('99999999999999999999999999999999999999999', userInfo)
+        /*  console.log('data is =>', encryptedData) */
 
         /* return */
+
 
         dispatch({
           type: 'member/login',
@@ -101,13 +103,13 @@ export default class ModalLogin extends Component {
     })
   }
 
-  handleCancel() {
+  handleCancel () {
     this.props.onCancel()
   }
 
-  handleToggleSku() {}
+  handleToggleSku () { }
 
-  render() {
+  render () {
     const { isShow } = this.props
 
     return (

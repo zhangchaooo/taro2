@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { connect } from '@tarojs/redux'
 import { View } from '@tarojs/components'
-import { AtAvatar, AtTabs, AtTabsPane, AtBadge } from 'taro-ui'
+import { AtAvatar, AtTabs, AtTabsPane, AtBadge, AtButton } from 'taro-ui'
 import withLoad from '../../utils/withLoad'
 import Loading from '../../components/_Loading'
 import ModalLogin from '../../components/ModalLogin/index.js'
@@ -44,7 +44,8 @@ export default class UserInfo extends Component {
     nickName: '',
     total: 8,
     display_name: 'none',
-    display_text: 'block'
+    display_text: 'block',
+    code: ''
   }
 
   handleClick (value) {
@@ -111,6 +112,41 @@ export default class UserInfo extends Component {
       }
     })
   }
+  getPhoneNumber = (e) => {
+    /* Taro.login({
+      success: res => {
+        console.log('code', res.code);
+
+      }
+
+    }) */
+    Request({
+      url: '/depositor/mobile',
+      method: 'POST',
+      data: {
+        /*  code: res.code, */
+        iv: e.detail.iv,
+        encryptedData: e.detail.encryptedData,
+        /* encryptedData: encodeURIComponent(e.detail.encryptedData), */
+      }
+    }).then((res) => {
+      console.log('ssssssssssssssssssssssssssssssss', res);
+
+    })
+    /* console.log(e);
+    console.log(e.detail); */
+
+    /* console.log(`是否成功调用${e.detail.errMsg}`) */
+    console.log(`加密算法的初始向量iv:${e.detail.iv}`);
+    console.log(`包括敏感数据在内的完整用户信息的加密数据encryptedData:${e.detail.encryptedData}`);
+    /* "0ElSBhIzwAqZ%2B7nPICg9%2FOu9ZHdX96NPetrEIbNL6xOu%2FWug1H5gONeIiuGbGea%2BuMjELXuSIvp%2BZom3wRDP1DKk6QNNnFDAB2bFPC9p4ig25c98uYi%2FPeH50ttTysjRmq01Rz1iwex9Sc%2F%2BtlonJ1zXT7pSUJU9hvI2m44PcTM03Wo26Yq%2FXbPvxe9tbhiSCQXYuyT8t%2Beu58H1HlG3Jw%3D%3D" */
+
+  }
+
+  continueToDeposite2 = () => {
+    console.log('liu2');
+
+  }
   refreshData = () => {
 
     console.log('refresh')
@@ -163,7 +199,7 @@ export default class UserInfo extends Component {
     }) */
   }
   showAddButton = (avatarUrl, nickName) => {
-    console.log('show_add_button')
+    console.log('show_add_Button')
     this.setState({
       display_name: 'block',
       display_text: 'none',
@@ -254,6 +290,16 @@ export default class UserInfo extends Component {
           className='at-icon at-icon-add add '
           style={{ padding: '5px', display: this.state.display_name }}
         ></View>
+        <View className='add2' >
+          <Button
+            type="primary"
+            openType="getPhoneNumber"
+            /*  bindgetphonenumber="getPhoneNumber" */
+            onGetPhoneNumber={this.getPhoneNumber}
+          >
+            授权手机号
+          </Button>
+        </View>
         <View className='top'>
           {/* <AtAvatar circle image={head_image} className='image'></AtAvatar> */}
           <ModalLogin
@@ -288,6 +334,22 @@ export default class UserInfo extends Component {
           >
             未登录
           </View>
+          <view className="padding flex flex-wrap justify-between align-center bg-white">
+            <Button className="cu-btn">默认</Button>
+            <Button className="cu-btn round">圆角</Button>
+            <Button className="cu-btn icon">
+              <text className="cuIcon-emojifill"></text>
+            </Button>
+          </view>
+          <view className="padding flex flex-wrap justify-between align-center bg-white">
+            <Button className="cu-btn round sm">小尺寸</Button>
+            <Button className="cu-btn round">默认</Button>
+            <Button className="cu-btn round lg">大尺寸</Button>
+          </view>
+          <view className="padding flex flex-direction">
+            <Button className="cu-btn bg-grey lg">玄灰</Button>
+            <Button className="cu-btn bg-red margin-tb-sm lg">嫣红</Button>
+          </view>
         </View>
         <AtTabsPane className='TabsWrap'>
           <AtTabs
