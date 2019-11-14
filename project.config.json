@@ -115,6 +115,20 @@
 					"pathName": "pages/editRecipient/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/depositeorder/index",
+					"pathName": "pages/depositeorder/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "pages/orderDetail/index",
+					"pathName": "pages/orderDetail/index",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

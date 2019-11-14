@@ -24,6 +24,8 @@ class App extends Component {
       'pages/expressHouse/index',
       'pages/deposite/index',
       'pages/editRecipient/index',
+      'pages/depositeorder/index',
+      'pages/orderDetail/index',
       'pages/userInfoModel/index',
       'pages/personal/index',
       'pages/index/index',
@@ -35,7 +37,7 @@ class App extends Component {
       backgroundTextStyle: 'dark',
       navigationBarBackgroundColor: '#FFAB0A',
       navigationBarTitleText: '快递屋',
-      navigationBarTextStyle: 'white',
+      navigationBarTextStyle: 'black',
       backgroundColor: '#f1f1f1'
     },
     tabBar: {
