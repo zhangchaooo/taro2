@@ -5,6 +5,7 @@ import { AtButton, AtForm, AtInput, AtToast, AtTextarea } from 'taro-ui'
 import './index.scss'
 import Recieve from '../../images/express/Group Copy@2x.png'
 import Mail from '../../images/express/360fba096317fb5123b079495145a54.png'
+import linePic from '../../images/express/copy 7@3x.png'
 
 import Request from '../../utils/request'
 
@@ -34,24 +35,23 @@ export default class Home extends Component {
   render () {
     return (
       <View className='index'>
-        <AtForm className='atform'>
+        <View className='form_one_wrap'>
           <View className='atform_input_first'>
             <Image
               style='width: 25px;height: 30px;'
               src={Mail}
             />
-            <AtInput placeholder="徐尚 130000000000000002"></AtInput>
+            <Input placeholder="徐尚 130000000000000002"></Input>
           </View>
+          <View className='bottom_line'></View>
           <View className='atform_input_second'>
-
             <Image
               style='width: 25px;height: 30px;'
               src={Recieve}
             />
-            <AtInput placeholder="点击编辑收件人信息"></AtInput>
+            <Input placeholder="点击编辑收件人信息"></Input>
           </View>
-
-        </AtForm>
+        </View>
         <AtForm className='atform2'>
 
           <View className='page-section'>
@@ -62,9 +62,10 @@ export default class Home extends Component {
                   {this.state.selectorChecked}
                 </View>
               </Picker>
+              <View className='jiantou1'><Image style={'width:10px;height:10px;'} src={linePic} /></View>
             </View>
           </View>
-
+          <View className='bottom_line'></View>
           <View className='page-section'>
             <Text>寄存物品</Text>
             <View>
@@ -73,6 +74,7 @@ export default class Home extends Component {
                   {this.state.selectorChecked2}
                 </View>
               </Picker>
+              <View className='jiantou2' ><Image style={'width:10px;height:10px;'} src={linePic} /></View>
             </View>
           </View>
 

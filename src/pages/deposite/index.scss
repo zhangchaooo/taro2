@@ -1,50 +1,86 @@
 .index{
-  padding-top: 40px;
-  .atform{
+  padding-top: 22px;
+  .form_one_wrap{
+    width:750px;
+    height:258px;
+    background:rgba(255,255,255,1);
+    opacity:1;
+    padding: 32px 0 32px 48px;
     .atform_input_first{
       display: flex;
-      justify-content: flex-end;
-      align-items: center;;
-      .at-input{
-        width: 587px;
-        padding-top: 38px;
-        padding-bottom: 38px;
-      }
+      align-items: center;
+      opacity:1;
       image{
-        margin-left: 15px;
+        margin-right: 54px;
+      }
+      Input{
+        width:470px;
+        height:44px;
+        font-size:32px;
+        font-family:PingFangSC-Regular;
+        line-height:48px;
+        color:rgba(51,51,51,1);
+        opacity:1;
       }
     }
-
+    .bottom_line{
+      width:702px;
+      height:2px;
+      background:rgba(238,238,238,1);
+      opacity:1;
+      margin-top:32px;
+      margin-bottom:38px;
+    }
     .atform_input_second{
       display: flex;
-      justify-content: flex-end;
-      align-items: center;;
-      .at-input{
-        width: 587px;
-        padding-top: 38px;
-        padding-bottom: 38px;
-      }
+      align-items: center;
+      opacity:1;
       image{
-        margin-left: 15px;
+        margin-right: 54px;
+      }
+      Input{
+        width:470px;
+        height:44px;
+        font-size:32px;
+        font-family:PingFangSC-Regular;
+        line-height:48px;
+        color:rgba(51,51,51,1);
+        opacity:1;
       }
     }
   }
   .atform2{
-    margin-top: 40px;
-    padding-left: 82px;
+    margin-top: 12px;
+    padding-left: 48px;
     .page-section{
       display: flex;
       justify-content: space-between;
-      padding-top: 38px;
-      padding-bottom: 38px;
+      padding-top: 34px;
+      padding-bottom: 34px;
       padding-right: 88px;
-      font-size: 30px;
-      border-bottom: 1px solid 	#F5F5F5;
+      font-size: 32px;
       color: 	#A9A9A9;
+      position: relative;
+      .jiantou1{
+        position: absolute;
+        right:63px;
+        top: 34px;
+      }
+      .jiantou2{
+        position: absolute;
+        right:44px;
+        bottom: 36px;
+      }
       text{
         color: #333333;
         font-size: 30px;
       }
+    }
+    .bottom_line{
+      width:702px;
+      height:2px;
+      background:rgba(238,238,238,1);
+      opacity:1;
     }
   }
   .atform3{
