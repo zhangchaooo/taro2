@@ -7,7 +7,7 @@ import { AtButton, AtForm, AtInput, AtToast } from 'taro-ui'
 import './index.scss'
 import bannerPic from '../../images/express/banner@2x.png'
 import Path from '../../images/express/Path 3@3x.png'
-import Arrow from '../../images/express/向下箭头 copy 7@2x.png'
+import Arrow from '../../images/express/copy 7@3x.png'
 import Record from '../../images/express/jilu-2 + Path Mask@2x.png'
 
 import Request from '../../utils/request'

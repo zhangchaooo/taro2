@@ -28,6 +28,8 @@ class App extends Component {
       'pages/orderDetail/index',
       'pages/orderDetailtwo/index',
       'pages/orderDetailthree/index',
+      'pages/myPage/index',
+      'pages/CertifiedmyPage/index',
       'pages/userInfoModel/index',
       'pages/personal/index',
       'pages/index/index',
@@ -37,7 +39,7 @@ class App extends Component {
     ],
     window: {
       backgroundTextStyle: 'dark',
-      navigationBarBackgroundColor: '#FFAB0A',
+      navigationBarBackgroundColor: '#FFCA2A',
       navigationBarTitleText: '快递屋',
       navigationBarTextStyle: 'black',
       backgroundColor: '#f1f1f1'
@@ -51,7 +53,7 @@ class App extends Component {
           selectedIconPath: './images/express/首页 @2x.png'
         },
         {
-          pagePath: 'pages/success/index',
+          pagePath: 'pages/myPage/index',
           text: '我的',
           iconPath: './images/express/我的 @2x.png',
           selectedIconPath: './images/express/我的 copy@2x.png'

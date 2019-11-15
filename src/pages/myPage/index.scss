@@ -1,0 +1,131 @@
+.index{
+  background: #fff;
+  height: 100vh;
+  position: relative;
+  .image_wrap{
+    width: 750px;
+    height: 292px;
+    image{
+      width:750px;
+      height:292px;
+      /* background:linear-gradient(360deg,rgba(255,176,18,1) 0%,rgba(255,202,42,1) 100%); */
+      opacity:1;
+    }
+  }
+  .whitezone{
+    width: 654px;
+    height: 200px;
+    position: absolute;
+    display: flex;
+    left: 48px;
+    top: 140px;
+    background: #fff;
+    justify-content: center;
+    padding-top: 110px;
+    background:rgba(255,255,255,1);
+    box-shadow:0px 0px 20px rgba(255,171,10,0.2);
+    opacity:1;
+    border-radius:4px;
+    .whitezone_text{
+      width:220px;
+      height:50px;
+      font-size:36px;
+      font-family:PingFangSC-Medium;
+      line-height:52px;
+      color:rgba(51,51,51,1);
+      opacity:1;
+    }
+  }
+  .avatar_wrap{
+    position: absolute;
+    left: 276px;
+    top: 24px;
+    image{
+      width:200px;
+      height:200px;
+      background:rgba(0,0,0,0);
+      border:4px solid rgba(255,255,255,1);
+      box-shadow:0px 0px 16px rgba(0,0,0,0.1);
+      border-radius:50%;
+      opacity:1;
+    }
+  }
+  .telephone_wrap{
+    width: 750px;
+    height: 80px;
+    /* background: darkkhaki; */
+    margin-top: 162px;
+    display: flex;
+    padding: 0 48px;
+    .telephone_wrap_one{
+      width:128px;
+      height:44px;
+      font-size:32px;
+      font-family:PingFangSC-Regular;
+      line-height:48px;
+      color:rgba(51,51,51,1);
+      opacity:1;
+      margin-right: 290px;
+    }
+    .telephone_wrap_two{
+      width:196px;
+      height:44px;
+      font-size:32px;
+      font-family:PingFangSC-Regular;
+      line-height:48px;
+      color:rgba(153,153,153,1);
+      opacity:1;
+      margin-right: 16px;
+    }
+    .telephone_wrap_three{
+      image{
+        width:24px;
+        height:24px;
+        opacity:1;
+        margin-top: 12px;
+      }
+    }
+  }
+  .Real_name_authentication{
+    width: 750px;
+    height: 80px;
+    /* background: darkkhaki; */
+    margin-top: 34px;
+    display: flex;
+    padding: 0 48px;
+    .Real_name_authentication_one{
+      width:128px;
+      height:44px;
+      font-size:32px;
+      font-family:PingFangSC-Regular;
+      line-height:48px;
+      color:rgba(51,51,51,1);
+      opacity:1;
+      margin-right: 390px;
+    }
+    .Real_name_authentication_two{
+      width:96px;
+      height:44px;
+      font-size:32px;
+      font-family:PingFangSC-Regular;
+      line-height:48px;
+      color:rgba(255,82,93,1);
+      opacity:1;
+    }
+    .Real_name_authentication_three{
+      image{
+        width:24px;
+        height:24px;
+        opacity:1;
+        margin-top: 12px;
+      }
+    }
+  }
+  .bottom_line{
+    width:702px;
+    height:2px;
+    background:rgba(238,238,238,1);
+    opacity:1;
+    margin-left: 48px;
+  }
+}
