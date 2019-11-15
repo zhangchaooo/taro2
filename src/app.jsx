@@ -31,6 +31,7 @@ class App extends Component {
       'pages/myPage/index',
       'pages/CertifiedmyPage/index',
       'pages/RealNameAuthentication/index',
+      'pages/RealNameAuthenticationed/index',
       'pages/userInfoModel/index',
       'pages/personal/index',
       'pages/index/index',

@@ -164,6 +164,12 @@
 					"pathName": "pages/RealNameAuthentication/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/RealNameAuthenticationed/index",
+					"pathName": "pages/RealNameAuthenticationed/index",
+					"scene": null
 				}
 			]
 		}
