@@ -129,6 +129,19 @@
 					"pathName": "pages/orderDetail/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/orderDetailtwo/index",
+					"pathName": "pages/orderDetailtwo/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/orderDetailthree/index",
+					"pathName": "pages/orderDetailthree/index",
+					"scene": null
 				}
 			]
 		}

@@ -26,6 +26,8 @@ class App extends Component {
       'pages/editRecipient/index',
       'pages/depositeorder/index',
       'pages/orderDetail/index',
+      'pages/orderDetailtwo/index',
+      'pages/orderDetailthree/index',
       'pages/userInfoModel/index',
       'pages/personal/index',
       'pages/index/index',

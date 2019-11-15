@@ -3,7 +3,7 @@ import { connect } from '@tarojs/redux'
 import { View, Text, Picker, Image } from '@tarojs/components'
 import { AtButton, AtAvatar, AtForm, AtInput, AtImagePicker } from 'taro-ui'
 import Request from '../../utils/request'
-import TopSuccess from '../../images/express/Group-2@3x.png'
+import TopSuccess from '../../images/express/Group@3x.png'
 
 import './index.scss'
 
@@ -31,9 +31,8 @@ export default class Index extends Component {
               />
             </View>
             <View className='text_wrap'>
-              <View className='text_wrap_first'><Text>已取件</Text></View>
-              <View className='text_wrap_second'><Text>您的快件已被领取</Text></View>
-              <View className='text_wrap_third'><Text>如有疑问请联系客服人员</Text></View>
+              <View className='text_wrap_first'><Text>待取件</Text></View>
+              <View className='text_wrap_second'><Text className='text_color'>请尽快取件</Text></View>
             </View>
           </View>
           <View className='bottomWrap'>
