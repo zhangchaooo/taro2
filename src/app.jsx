@@ -30,6 +30,7 @@ class App extends Component {
       'pages/orderDetailthree/index',
       'pages/myPage/index',
       'pages/CertifiedmyPage/index',
+      'pages/RealNameAuthentication/index',
       'pages/userInfoModel/index',
       'pages/personal/index',
       'pages/index/index',
