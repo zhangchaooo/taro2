@@ -169,6 +169,13 @@
 					"id": -1,
 					"name": "pages/RealNameAuthenticationed/index",
 					"pathName": "pages/RealNameAuthenticationed/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/card/index",
+					"pathName": "pages/card/index",
 					"scene": null
 				}
 			]
