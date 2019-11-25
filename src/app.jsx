@@ -33,6 +33,7 @@ class App extends Component {
       'pages/RealNameAuthentication/index',
       'pages/RealNameAuthenticationed/index',
       'pages/card/index',
+      'pages/sharePage/index',
       'pages/userInfoModel/index',
       'pages/personal/index',
       'pages/index/index',

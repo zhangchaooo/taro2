@@ -258,11 +258,11 @@ export default class UserInfo extends Component {
       noDataText
     } = this.props
     if (!list) list = []
-    console.log(
+    /* console.log(
       '组件的list',
       list,
       '---------------------------------------------------------------------------------'
-    )
+    ) */
     const tabList = [
       { title: '全部' },
       { title: '待取件' },

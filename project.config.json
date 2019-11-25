@@ -176,6 +176,13 @@
 					"id": -1,
 					"name": "pages/card/index",
 					"pathName": "pages/card/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/sharePage/index",
+					"pathName": "pages/sharePage/index",
 					"scene": null
 				}
 			]
